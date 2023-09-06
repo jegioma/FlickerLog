@@ -1,0 +1,41 @@
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0rem 1rem;
+    background-color: #000814;
+    width: 100%;
+    margin: auto;
+}
+.logo {
+    margin-right: 3%;
+    margin-left: 2%;
+}
+.title {
+    margin-right: auto;
+    font-size: 6rem;
+    font-weight: 700;
+    color: #f5f7f7;
+}
+.title:hover {
+    background: url(/streaks.gif);
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: #f5f7f7 0.5px;
+    cursor: default;
+}
+.links {
+    list-style: none;
+    font-weight: 700;
+    color: #f5f7f7;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline;
+    padding: 0em 0.5em;
+    transition: all 0.3s ease 0s;
+}
+.links:hover {
+    color: #ffd60a;
+    /* background-color: #f5f7f7; */
+    border-radius: 5px;
+}
