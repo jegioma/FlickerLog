@@ -8,7 +8,6 @@ import {
 export default function Header() {
     return (
         <header className={styles.header}>
-            <Image className={styles.logo} src='/DVLogo.svg' alt='FlickerLog Logo' width={75} height={100}  />
             <Heading className={styles.title} fontSize='5xl'>FlickerLog</Heading>
 
             <Breadcrumb fontSize='xl'>

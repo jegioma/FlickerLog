@@ -1,10 +1,10 @@
 import styles from '../styles/index.module.css'
 import {
-  Box, Heading, HStack, VStack, Input, Image, Wrap, WrapItem, Center, Button
+  Box, Heading, HStack, VStack, Image, Wrap, WrapItem, Button
 } from '@chakra-ui/react'
 
-
 export default function Index() {
+
   return (
     <>
       <Box className={styles.body} margin={0} padding={0}>
