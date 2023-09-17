@@ -15,10 +15,10 @@ export default function Header() {
                     <Link href='/index'>Home</Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem className={styles.links}>
-                    <Link href='/index'>Home</Link>
+                    <Link href='/profile'>Profile</Link>
                 </BreadcrumbItem>
                 <BreadcrumbItem className={styles.links}>
-                    <Link href='/index'>Home</Link>
+                    <Link href='/search'>Search</Link>
                     <BreadcrumbSeparator />
                 </BreadcrumbItem>
             </Breadcrumb>
