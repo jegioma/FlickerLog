@@ -9,8 +9,13 @@ import 'react-lazy-load-image-component/src/effects/blur.css'; // Import CSS for
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'; // Import Bootstrap components
 
 
-
 export default function Index() {
+  const images = [
+    '/office.jpeg',
+    '/spiderverse.jpeg',
+    '/maverick.jpg',
+    '/bleach.jpg'
+]
 
   return (
     <>
@@ -81,6 +86,9 @@ export default function Index() {
           
           
         </VStack>
+        <div>
+            <Carousel images={images} />
+        </div>
       </Box>
     </>
   )
