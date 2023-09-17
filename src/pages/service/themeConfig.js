@@ -7,9 +7,10 @@ const theme = extendTheme({
                 height: '100vh',
                 width: '100wh', 
                 backgroundSize: '300% 300%',
-                backgroundImage: 'linear-gradient(#222323, #21DAE3)', 
+                backgroundImage: 'linear-gradient(#222323, #2E8B57)', 
                 animation: 'gradient linear infinite'
             }
+            
         }
     }
 })
