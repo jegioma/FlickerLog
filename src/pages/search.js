@@ -20,6 +20,7 @@ export default function Search() {
     const [ searchList, setSearchList ] = useState([]);
     const [ numResults, setNumResults ] = useState(20);
     const [ hasNoResults, setHasNoResults ] = useState(false);
+    const [ currentPage, setCurrentPage ] = useState(1)
 
 
     const options = {
@@ -44,6 +45,7 @@ export default function Search() {
                         setSearchList(data.results.slice(0, 20));
                         setNumResults(20)
                         setHasNoResults(false);
+                        setCurrentPage(data.page)
                     })
             } catch (error) {
                 console.log(error);
@@ -86,7 +88,11 @@ export default function Search() {
                         </MemoCard>
                     ))
                 } 
-                <Button bg='#53DAE3' _hover={{backgroundColor: '#53DAE3aa'}} marginTop='3rem'>Load More</Button>
+                <HStack>
+                    <Button></Button>
+                    <Text>{currentPage}</Text>
+                    <Button></Button>
+                </HStack>
                 </VStack>
             </Center>
         </Box>

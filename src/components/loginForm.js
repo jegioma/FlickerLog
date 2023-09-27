@@ -1,5 +1,4 @@
 import React, { use, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Link from 'next/link';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
@@ -39,7 +38,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
 
     function Redirect () {
         if (signInSuccess){
-         router.push('/');
+         router.push('/profile');
       }
         return null;
     }

@@ -1,7 +1,7 @@
 import {
-    Box, SimpleGrid, Grid, GridItem, VStack, HStack, Stack, Text, Heading, Image, Card,
+    Box, SimpleGrid, Grid, GridItem, VStack, HStack, Stack, Text, Heading, Image, Card, IconButton
 } from '@chakra-ui/react'
-import Head from 'next/head'
+import { AddIcon } from '@chakra-ui/icons'
 
 export default function Profile() {
 
@@ -28,12 +28,24 @@ export default function Profile() {
             <GridItem>
               <Box border='green 3px solid' borderRadius={15} width='45rem' backgroundColor='#d9d9d9'>
                 <VStack>
-                  <Heading color='#000' marginBottom='3rem'>Your Watchlists</Heading>
-                  <SimpleGrid columns={2} spacing={3}>
-                    <Card border='solid orange 3px' width={80} height={200} borderRadius={20}>
-                      
+                  <Heading color='#000'>Your Watchlists</Heading>
+                  <SimpleGrid columns={3} spacing={10} padding='2rem'>
+                    <Card border='solid orange 3px' width={40} height={100} borderRadius={20} padding={5}>
+                      <Stack align='center'>
+                        <Heading  fontSize='lg' color='#000'>New List</Heading>
+                        <AddIcon  />
+                      </Stack>
                     </Card>
-                    <Card border='solid orange 3px' width={80} height={200} borderRadius={20}>
+                    <Card border='solid orange 3px' width={40} height={100} borderRadius={20}>
+
+                    </Card>
+                    <Card border='solid orange 3px' width={40} height={100} borderRadius={20}>
+
+                    </Card>
+                    <Card border='solid orange 3px' width={40} height={100} borderRadius={20}>
+
+                    </Card>
+                    <Card border='solid orange 3px' width={40} height={100} borderRadius={20}>
 
                     </Card>
                   </SimpleGrid>
