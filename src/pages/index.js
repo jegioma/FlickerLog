@@ -149,11 +149,11 @@ export default function Index() {
           <HStack spacing="2rem">
             
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
-              <Text fontSize="xl" color="blue" fontWeight="bold" marginBottom="1rem">
+              <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
                 Category 1
               </Text>
               <Box
-                backgroundColor="blue"
+                backgroundColor="#2E8B57"
                 padding="0.5rem"
                 borderRadius="10px"
                 width="100%"
@@ -164,11 +164,11 @@ export default function Index() {
             </Flex>
 
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
-              <Text fontSize="xl" color="green" fontWeight="bold" marginBottom="1rem">
+              <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
                 Category 2
               </Text>
               <Box
-                backgroundColor="green"
+                backgroundColor="#2E8B57"
                 padding="0.5rem"
                 borderRadius="10px"
                 width="100%"
@@ -179,11 +179,11 @@ export default function Index() {
             </Flex>
 
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
-              <Text fontSize="xl" color="red" fontWeight="bold" marginBottom="1rem">
+              <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
                 Category 3
               </Text>
               <Box
-                backgroundColor="red"
+                backgroundColor="#2E8B57"
                 padding="0.5rem"
                 borderRadius="10px"
                 width="100%"

@@ -18,12 +18,21 @@ const Carousel = ({ images }) => {
   const [index, setIndex] = useState(0);
 
   const nextImage = () => {
-    setIndex((current) => (current + 1) % images.length);
+    if (images && images.length > 0) {
+      setIndex((current) => (current + 1) % images.length);
+    }
   };
 
   const prevImage = () => {
-    setIndex((current) => (current - 1 + images.length) % images.length);
+    if (images && images.length > 0) {
+      setIndex((current) => (current - 1 + images.length) % images.length);
+    }
   };
+
+  if (!images || images.length === 0) {
+    return <div style={{ color: 'red' }}>No images to display</div>;
+  }
+  
 
   return (
     <Box>

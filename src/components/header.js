@@ -18,18 +18,10 @@ export default function Header() {
             align="center"
             justify="space-between"
             padding="1rem"
-            backgroundColor="#feb236" // Customize the background color
+            backgroundColor="#0f0e0c" // Customize the background color
             color="black" // Customize the text color
         >
     <Center>
-        <Image
-          src="https://i.pinimg.com/originals/21/cd/b8/21cdb894dc262b1b668d20c64dd488cd.gif"
-          alt="Animated GIF"
-          w="100px"
-          h="80px"
-          mr="2rem"
-        style={{ backgroundColor: '#feb236' }} // Set the background color of the GIF
-        />
     <Heading className={styles.title} fontSize="5xl" color="#2E8B57">
         FlickerLog
     </Heading>
@@ -39,19 +31,19 @@ export default function Header() {
       w="100px"
       h="80px"
       ml="2rem"
-      style={{ backgroundColor: '#feb236' }} // Set the background color of the GIF
+      style={{ backgroundColor: '#090b07' }} // Set the background color of the GIF
     />
   </Center>
 
   <HStack spacing="1rem">
     <Breadcrumb fontSize="xl">
-      <BreadcrumbItem _hover={{ backgroundColor: '#153f00', color: 'tomato' }}>
+      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
         <Link href="/">Home</Link>
       </BreadcrumbItem>
-      <BreadcrumbItem _hover={{ backgroundColor: '#153f00', color: 'tomato' }}>
+      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
         <Link href="/profile">Profile</Link>
       </BreadcrumbItem>
-      <BreadcrumbItem _hover={{ backgroundColor: '#153f00', color: 'tomato' }}>
+      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
         <Link href="/search">Search</Link>
         <BreadcrumbSeparator />
       </BreadcrumbItem>
