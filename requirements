@@ -2,3 +2,12 @@ firebase
 
 @chakra-ui/react @chakra-ui/next-js @emotion/react @emotion/styled framer-motion
 
+--save react-icons-kit
+
+react-responsive-carousel
+
+react-router-dom
+
+react-bootstrap
+
+validator

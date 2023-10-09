@@ -108,31 +108,37 @@ function CarouselWithHover({ images, imdbIds }) {
 
 export default function Index() {
   const imdbIds1 = [
-    'tt4682562',
-    'tt9362722',
+    'tt3291150',
+    'tt0439572',
     'tt1745960',
+    'tt5433140',
+    'tt15398776'
   ];
   const imdbIds2 = [
     'tt14986406',
     'tt6751668',
+    'tt4682562'
   ];
   const imdbIds3 = [
-    'tt15398776',
+    '',
     'tt1630029',
     'tt1517268',
   ];
 
   const images1 = [
-    '/office.jpeg',
-    '/spiderverse.jpeg',
+    'https://img.omdbapi.com/?i=tt3291150&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=tt0439572&h=600&apikey=9dce2383',
     '/maverick.jpg',
+    'https://img.omdbapi.com/?i=tt5433140&h=600&apikey=9dce2383',
+    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg'
   ];
   const images2 = [
     '/bleach.jpg',
     '/parasite.jpg',
+    '/office.jpeg'
   ];
   const images3 = [
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg',
+    '',
     'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_SX300.jpg',
     'https://m.media-amazon.com/images/M/MV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg',
   ];
@@ -150,7 +156,7 @@ export default function Index() {
             
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
               <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
-                Category 1
+                Action
               </Text>
               <Box
                 backgroundColor="#2E8B57"
@@ -165,7 +171,7 @@ export default function Index() {
 
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
               <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
-                Category 2
+                Comedy
               </Text>
               <Box
                 backgroundColor="#2E8B57"
@@ -180,7 +186,7 @@ export default function Index() {
 
             <Flex justifyContent="center" alignItems="center" flexDirection="column">
               <Text fontSize="xl" color="white" fontWeight="bold" marginBottom="1rem">
-                Category 3
+                Drama
               </Text>
               <Box
                 backgroundColor="#2E8B57"
