@@ -112,17 +112,24 @@ export default function Index() {
     'tt0439572',
     'tt1745960',
     'tt5433140',
-    'tt15398776'
+    'tt15398776',
+    'tt14986406'
   ];
   const imdbIds2 = [
-    'tt14986406',
-    'tt6751668',
-    'tt4682562'
+    'tt8005118',
+    'tt1981558',
+    'tt4682562',
+    'tt14209916',
+    'tt6791350',
+    'tt2861424',
   ];
   const imdbIds3 = [
-    '',
+    'tt6751668',
     'tt1630029',
     'tt1517268',
+    'tt9764362',
+    'tt13833688',
+    'tt3704428'
   ];
 
   const images1 = [
@@ -130,17 +137,25 @@ export default function Index() {
     'https://img.omdbapi.com/?i=tt0439572&h=600&apikey=9dce2383',
     '/maverick.jpg',
     'https://img.omdbapi.com/?i=tt5433140&h=600&apikey=9dce2383',
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg'
+    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg',
+    '/bleach.jpg'
   ];
   const images2 = [
-    '/bleach.jpg',
-    '/parasite.jpg',
-    '/office.jpeg'
+    'https://img.omdbapi.com/?i=tt8005118&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=tt1981558&h=600&apikey=9dce2383',
+    '/office.jpeg',
+    'https://img.omdbapi.com/?i=tt14209916&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=tt6791350&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=tt2861424&h=600&apikey=9dce2383',
+
   ];
   const images3 = [
-    '',
+    '/parasite.jpg',
     'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_SX300.jpg',
     'https://m.media-amazon.com/images/M/MV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg',
+    'https://img.omdbapi.com/?i=tt9764362&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=tt13833688&h=600&apikey=9dce2383',
+    'https://img.omdbapi.com/?i=/tt3704428&h=600&apikey=9dce2383'
   ];
 
   return (
