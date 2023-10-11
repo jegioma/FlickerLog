@@ -12,31 +12,60 @@ import {
   FormLabel,
   Input,
   Button,
-  Card
 } from '@chakra-ui/react';
 
 import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
 
 
 
-export default function AvatarProfilePicture({ isOpen, onClose }) {
+export default function CreateWatchList({ isOpen, onClose }) {
     const [listName, setListName] = useState('');
     const listRef = collection(db, "WatchList");
     const email = auth?.currentUser?.email;
 
 
   // Save list information to firebase firestore
+  const saveList = async () => {
+   if (listName != ''){
+    try{
+       await addDoc(listRef, 
+         {
+           email: email.toLowerCase(),
+           listName: listName
+         });
+        
+    }catch(error){
+      console.log(error);
+     
+    }
+  }
+  onClose
+ }
+
+
+ const handleKeyDown = (e) => {
+  if (e.key === 'Enter') {
+    saveList();
+  }
+};
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent backgroundColor={'white'} >
-        <ModalHeader>Choose your profile picture</ModalHeader>
+        <ModalHeader>Create your watchlist</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <Card>
-            
-          </Card>
+          <form >
+            <FormControl>
+              <FormLabel>Watchlist name:</FormLabel>
+              <Input placeholder="Enter the watchlist name" onChange={(e) =>{ setListName(e.target.value)}}
+               onKeyDown={handleKeyDown}  // Listen for Enter key press
+              
+              />
+            </FormControl>
+          </form>
         </ModalBody>
 
         <ModalFooter>

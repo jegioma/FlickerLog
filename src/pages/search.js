@@ -37,7 +37,7 @@ export default function Search() {
                 // const searchTerm = searchName.trim().replace(/[\s]+/g, '%');
                 // setMovieInfo(searchTerm);
                 // fetch(`${searchUrl}?s=${searchTerm}&type=movie&apikey=${apiKey}`) // use apiKey variable here
-                fetch('https://api.themoviedb.org/3/search/movie?query=batman&include_adult=false&language=en-US&page=2', options)
+                fetch(`https://api.themoviedb.org/3/search/movie?query=batman&include_adult=false&language=en-US&page=${currentPage}`, options)
 
                     .then(response => response.json())
                     .then (data => {

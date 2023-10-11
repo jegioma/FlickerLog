@@ -8,10 +8,10 @@ import {
   import 'react-lazy-load-image-component/src/effects/blur.css'; // Import CSS for image effects
   import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'; // Import Bootstrap components
   import Link from 'next/link';
-  
 
 
 export default function Header() {
+   
     return (
         <Flex
             as="nav"
@@ -50,6 +50,8 @@ export default function Header() {
     </Breadcrumb>
 
     <Button
+       as ={Link}
+        href='/login'
       className="custom-button"
       _hover={{
         backgroundColor: '#153f00',

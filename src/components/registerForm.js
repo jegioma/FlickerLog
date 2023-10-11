@@ -10,8 +10,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 
-import {db, addDoc, collection,getDocs} from '../configure/firebase.js';
-import {auth} from '../configure/firebase.js';
+import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
 
 import ShowAlert from './alert.js';
@@ -25,6 +24,8 @@ export const RegisterForm = () => {
     const [confirmPassword, setConfirmPassword]= useState('');
     const [userName, setUserName] = useState('');
     const [vertifyPassword, setVertifyPassword] = useState(false);
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString(); // Format as a string: "MM/DD/YYYY"
 
     const [showGoodAlert, setShowgoodAlert] = useState('no');
     const [showBadAlert, setShowBadAlert] = useState('no');
@@ -55,9 +56,10 @@ export const RegisterForm = () => {
      try{
         await addDoc(userRef, 
           {
-            userName: userName,
-            emial: email,
-            pawword: password,
+            userName: userName.toLowerCase(),
+            email: email.toLowerCase(),
+            password: password,
+            memberSince: formattedDate,
           });
          
      }catch(error){
@@ -140,6 +142,7 @@ export const RegisterForm = () => {
                // Call checkPassword function
               else if (vertifyPassword) {
                 Register(); 
+                saveUser()
                 if (showGoodAlert ==='yes'){
                 saveUser()// Call Register function if vertifyPassword is true
                 setShowgoodAlert('yes');
