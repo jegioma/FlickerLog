@@ -36,12 +36,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
     const [checkRememberMe, setCheckRememberMe] = useState(false);
     const router = useRouter();
 
-    function Redirect () {
-        if (signInSuccess){
-         router.push('/profile');
-      }
-        return null;
-    }
+ 
   
     const signIn = async () => {
       try {
@@ -50,7 +45,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
         const user = userCredential.user;
 
         setSignInSuccess(true);
-        
+        router.push('/profile');
         // ...
       } catch (error) {
 
@@ -60,6 +55,13 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
       }
     };
     
+    const onKeyFunction = (e) => {
+      if (e.key === 'Enter') {
+        signIn();
+      } 
+    }
+
+
     return (
       <Box>
         {showError==='yes' ? ShowAlert('error', 'Failed!', errorMessage):null}
@@ -68,7 +70,8 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input type='email' placeholder='📧 Enter your email' textAlign={'left'} 
-            onChange={(e) => setEmail(e.target.value)}/>
+            onChange={(e) => setEmail(e.target.value)}
+            onkeyDown={onKeyFunction}/>
           </FormControl>
   
           <FormControl>
@@ -78,6 +81,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
                 type={showPassword ? 'text' : 'password'}
                 placeholder='Enter your password'
                 onChange={(e) =>setPassword(e.target.value)}
+                onkeyDown={onKeyFunction}
               />
               <InputRightElement>
                 <IconButton
@@ -99,8 +103,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
               <Link href='/resetPassword'>Forgot password</Link>
             </Box>
           </Stack>
-          <Button width='full' mt={4} onClick={() => { signIn(); Redirect(); }} _hover={{ backgroundColor: 'orange' }}>
-            <Link href='/'></Link>
+          <Button width='full' mt={4} onClick={signIn} _hover={{ backgroundColor: 'orange' }}>
               Sign In
           </Button>
   
