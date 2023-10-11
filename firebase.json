@@ -1,19 +1,26 @@
 {
   "hosting": {
-<<<<<<< HEAD
-    "public": "src"
-    
-=======
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "public": "src",
+    "rewites": [
+        {
+            "source": "**",
+            "destination": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/index.js",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=0, must-revalidate"
+                }
+            ]
+        }
     ]
   },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
->>>>>>> c8eef0e462cfbc44b1774e11f1d8d6195b4422a4
   }
 }
