@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import {db, addDoc, auth, query, where} from '../configure/firebase.js';
 import {getDocs, collection} from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
-import { Route } from 'react-router-dom';
 import { useRouter } from 'next/router';
 
 export default function UserInfo() {
