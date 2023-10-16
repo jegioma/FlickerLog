@@ -9,10 +9,27 @@ import {
   import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'; // Import Bootstrap components
   import Link from 'next/link';
   import { Router } from 'react-router-dom';
-
-
+  import { auth } from '../configure/firebase.js';
+  import { useState, useEffect } from 'react';
 export default function Header() {
-   
+  const [user, setUser] = useState(""); // Initialize user state
+
+  // check if user is logged in, if not then route to login page instead of an empty profile page
+  useEffect(() => {
+      const checkLogin = () => {
+          auth.onAuthStateChanged(user => {
+              if (user) {
+                  setUser(user);
+              } else {
+                  setUser("");
+              }
+          })
+
+      }
+  checkLogin()
+  }, []);
+
+
     return (
         <Flex
         as="nav"
@@ -44,9 +61,13 @@ export default function Header() {
                 <BreadcrumbItem _hover={{backgroundColor: '#153f00',color: 'Tomato',}}>
                     <Link href='/'>Home</Link>
                 </BreadcrumbItem>
-                <BreadcrumbItem _hover={{backgroundColor: '#153f00',color: 'Tomato',}}>
-                    <Link href='/profile'>Profile</Link>
-                </BreadcrumbItem>
+                <BreadcrumbItem _hover={{ backgroundColor: '#153f00', color: 'Tomato' }}>
+            {user ? (
+              <Link href="/profile">Profile</Link>
+            ) : (
+              <Link href="/login">Profile</Link>
+            )}
+          </BreadcrumbItem>
                 <BreadcrumbItem _hover={{backgroundColor: '#153f00',color: 'Tomato',}}>
                     <Link href='/search'>Search</Link>
                     <BreadcrumbSeparator />
