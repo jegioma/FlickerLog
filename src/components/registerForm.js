@@ -1,5 +1,4 @@
-import React, {useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Input,
@@ -9,158 +8,131 @@ import {
   InputGroup,
   InputRightElement,
 } from '@chakra-ui/react';
-
-import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
-import { createUserWithEmailAndPassword} from 'firebase/auth';
-
+import { db, doc, setDoc, collection, auth } from '../configure/firebase.js';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import ShowAlert from './alert.js';
 import validator from 'validator';
 
-//components for the Register
 export const RegisterForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState(false);
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword]= useState('');
-    const [userName, setUserName] = useState('');
-    const [vertifyPassword, setVertifyPassword] = useState(false);
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleDateString(); // Format as a string: "MM/DD/YYYY"
+  const [showGoodAlert, setShowGoodAlert] = useState('no');
+  const [showBadAlert, setShowBadAlert] = useState('no');
+  const [errorMessage, setErrorMessage] = useState('');
 
-    const [showGoodAlert, setShowgoodAlert] = useState('no');
-    const [showBadAlert, setShowBadAlert] = useState('no');
-    const [errorMessage, setErrorMessage] = useState('');
+  const userRef = collection(db, 'Users');
 
-    // define the collection from firebase
-    const userRef = collection(db, "Users");
-
-
-    // Create authentication user with email and password
-    const Register = async () => {
-     try{
-      const user  = await createUserWithEmailAndPassword(auth, email, password);
-      setShowgoodAlert('yes');
+  const Register = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      setShowGoodAlert('yes');
       setShowBadAlert('no');
-     }
-     catch(error){
+    } catch (error) {
       setShowBadAlert('yes');
-      setShowgoodAlert('no');
+      setShowGoodAlert('no');
       setErrorMessage(error.message);
-     }
     }
-   
+  };
 
-    // Save user information to firebase firestore
-    const saveUser = async () => {
-  
-     try{
-        await addDoc(userRef, 
-          {
-            userName: userName.toLowerCase(),
-            email: email.toLowerCase(),
-            password: password,
-            memberSince: formattedDate,
-          });
-         
-     }catch(error){
-       console.log(error);
-      
-     }
+  const saveUser = async () => {
+    try {
+      // Save user data to Firebase
+      const userDocRef = doc(db, 'Users', userName.toLowerCase()); // Assuming userName is the document ID of the user
+      await setDoc(userDocRef, {
+        userName: userName.toLowerCase(),
+        email: email.toLowerCase(),
+        password: password,
+        memberSince: formattedDate,
+      });
+    } catch (error) {
+      console.error('Error saving user data: ', error);
+    }
+  };
+
+  useEffect(() => {
+    async function checkPassword() {
+      if (password !== confirmPassword) {
+        setVerifyPassword(false);
+      } else {
+        setVerifyPassword(true);
+      }
+    }
+    checkPassword();
+  }, [password, confirmPassword]);
+
+  function ValidateEmail(email) {
+    if (validator.isEmail(email)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
+  return (
+    <Box>
+      {showGoodAlert === 'yes' ? ShowAlert('success', 'Success!', 'You successfully registered') : null}
+      {showBadAlert === 'yes' ? ShowAlert('error', 'Failed!', errorMessage) : null}
 
-    // Check if password and confirm password match
-    useEffect(() => {
-      async function checkPassword() {
-        if (password !== confirmPassword) {
-          setVertifyPassword(false);
-         
-        } else {
-          setVertifyPassword(true);
+      <form>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input type="email" placeholder="Enter your email" textAlign={'left'} onChange={(e) => setEmail(e.target.value)} />
+        </FormControl>
 
-        }
-      }
-      
-      checkPassword();
-    }, [password, confirmPassword]);
-    
-    function ValidateEmail(email) {
-      if (validator.isEmail(email)) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+        <FormControl>
+          <FormLabel>Password</FormLabel>
+          <InputGroup>
+            <Input type="password" placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} />
+            <InputRightElement />
+          </InputGroup>
+        </FormControl>
 
+        <FormControl>
+          <FormLabel>Confirm Password</FormLabel>
+          <Input
+            type="password"
+            placeholder="Confirm your password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </FormControl>
 
-    return (
-      <Box>
-        {showGoodAlert ==='yes'? ShowAlert('success', 'Success!', 'You successfully register'): null}
-        {showBadAlert==='yes' ? ShowAlert('error', 'Failed!', errorMessage):null}
+        <FormControl>
+          <FormLabel>User Name</FormLabel>
+          <Input type="text" placeholder="Enter your user name" onChange={(e) => setUserName(e.target.value)} />
+        </FormControl>
 
-        <form>
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input type='email' placeholder='Enter your email' textAlign={'left'}
-              onChange={(e) => {setEmail(e.target.value)}} />
-          </FormControl>
-  
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <InputGroup>
-            <Input type='text' placeholder='Enter your password' 
-            onChange={(e) => {setPassword(e.target.value)}}/>
-  
-            <InputRightElement>
-            </InputRightElement>
-            </InputGroup>
-          </FormControl>
-  
-          <FormControl>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input type='text' placeholder='Confirm your password' 
-            onChange = {(e) => {setConfirmPassword(e.target.value)}}
-            />
-          </FormControl>
-  
-          <FormControl>
-            <FormLabel>User Name</FormLabel>
-            <Input type='text' placeholder='Enter your user name'
-            onChange={(e) => {setUserName(e.target.value)}} />
-          </FormControl>
-          
-          <Button
-            width={'full'}
-            mt={4}
-            _hover={{ backgroundColor: 'orange' }}
-            onClick={() => {
-              if (!ValidateEmail(email)) {
-                setShowgoodAlert('no');
-                setShowBadAlert('yes');
-               setErrorMessage('Please enter a valid email address');
-              }
-               // Call checkPassword function
-              else if (vertifyPassword) {
-                Register(); 
-                saveUser()
-                if (showGoodAlert ==='yes'){
-                saveUser()// Call Register function if vertifyPassword is true
-                setShowgoodAlert('yes');
+        <Button
+          width={'full'}
+          mt={4}
+          _hover={{ backgroundColor: 'orange' }}
+          onClick={() => {
+            if (!ValidateEmail(email)) {
+              setShowGoodAlert('no');
+              setShowBadAlert('yes');
+              setErrorMessage('Please enter a valid email address');
+            } else if (verifyPassword) {
+              Register();
+              if (showGoodAlert === 'yes') {
+                saveUser();
+                setShowGoodAlert('yes');
                 setShowBadAlert('no');
-                };
-                
-                
-              } else {
-               setShowgoodAlert('no');
-               setShowBadAlert('yes');
-               setErrorMessage('Password do not match');
               }
-          ;}}
-          >
-            Sign up
-          </Button>
-  
-        </form>
-      </Box>
-    );
-  };
+            } else {
+              setShowGoodAlert('no');
+              setShowBadAlert('yes');
+              setErrorMessage('Passwords do not match');
+            }
+          }}
+        >
+          Sign up
+        </Button>
+      </form>
+    </Box>
+  );
+};
