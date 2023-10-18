@@ -1,10 +1,4 @@
-const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-    }
-  };
+const omdbKey = process.env.NEXT_PUBLIC_OMDB_KEY;
 
 export async function fetchMovieDetails(movie) {
   try {
