@@ -36,8 +36,4 @@
 //     return genreResults;
 // };
 
-
-
-
-
 // export default fetchGenre;
