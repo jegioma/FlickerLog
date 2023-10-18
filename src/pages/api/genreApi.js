@@ -1,20 +1,20 @@
-// const url = 'https://streaming-availability.p.rapidapi.com/genres';
-const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en'
-const motnOptions = {
-    method: 'GET',
-    headers: {
-        'x-rapidapi-host': process.env.NEXT_PUBLIC_MOTN_RAPIDAPI_HOST,
-        'x-rapidapi-key': process.env.NEXT_PUBLIC_X_RAPIDAPI_KEY
-    }
-};
+// // const url = 'https://streaming-availability.p.rapidapi.com/genres';
+// const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en'
+// const motnOptions = {
+//     method: 'GET',
+//     headers: {
+//         'x-rapidapi-host': process.env.NEXT_PUBLIC_MOTN_RAPIDAPI_HOST,
+//         'x-rapidapi-key': process.env.NEXT_PUBLIC_X_RAPIDAPI_KEY
+//     }
+// };
 
-const tmdbOptions = {
-    method: 'GET',
-    headers: {
-        accept: 'application/json',
-        Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-    }
-}
+// const tmdbOptions = {
+//     method: 'GET',
+//     headers: {
+//         accept: 'application/json',
+//         Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
+//     }
+// }
     
 // const fetchGenre = async () => {
 //     let genreResults = []; 
@@ -38,6 +38,4 @@ const tmdbOptions = {
 
 
 
-
-
-export default fetchGenre;
+// export default fetchGenre;
