@@ -45,7 +45,7 @@ export default function DetailsPage() {
       <Box backgroundColor='#d9d9d9' width='100%' height='100%' borderRadius={15}>
         <HStack  padding='1rem' align="flex-start" justify="flex-start">
             <Image
-                src={resultDetails?.poster_path ? `http://image.tmdb.org/t/p/w780${results.poster_path}` : '/imageNA.jpg'}
+                src={resultDetails?.Poster ? resultDetails?.Poster : '/imageNA.jpg'}
                 width={300}
                 height={400}
                 alt={resultDetails?.title}
