@@ -1,4 +1,4 @@
-// // const url = 'https://streaming-availability.p.rapidapi.com/genres';
+// const url = 'https://streaming-availability.p.rapidapi.com/genres';
 // const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en'
 // const motnOptions = {
 //     method: 'GET',
@@ -35,7 +35,5 @@
 
 //     return genreResults;
 // };
-
-
 
 // export default fetchGenre;
