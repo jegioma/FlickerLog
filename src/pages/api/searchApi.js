@@ -53,7 +53,7 @@ export async function fetchShowDetails(tv) {
 //     }
 //   }
 
-export function formateDate(dateString) {
+export function formatDate(dateString) {
     let date = dateString.split('-'); //split dateSting by '-' into array
     return date.splice(1).join('-') + '-' + date[0]; //splice array from second element (1) and join MM & DD with '-', then adds the first in array (0) to end
 }

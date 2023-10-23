@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { useRouter } from 'next/router';
-import { formateDate } from '@/pages/api/searchApi';
+import { formatDate } from '@/pages/api/searchApi';
 import { useState, useEffect, memo } from 'react'
 
 export default function ResultItem({results, genreMap}) {
@@ -25,7 +25,7 @@ export default function ResultItem({results, genreMap}) {
             />
             <VStack spacing={4} padding='0 1rem 0 0' align='flex-start' width='100%'>
                 <Heading marginBlock={-4} marginTop={1} fontSize='xl'>{results.title || results.name}</Heading> 
-                <Text>{results.release_date ? 'Released: ' + formateDate(results.release_date) : (results.first_air_date ? 'First Aired: ' + formateDate(results.first_air_date) : 'Date Not Available')}</Text>
+                <Text>{results.release_date ? 'Released: ' + formatDate(results.release_date) : (results.first_air_date ? 'First Aired: ' + formatDate(results.first_air_date) : 'Date Not Available')}</Text>
                 <Text marginBottom={-3} marginTop={-5} >Genres</Text>
                 <UnorderedList margin={0} width='100%' display='grid' gridTemplateColumns='repeat(3, 1fr)' styleType='none'>
                     {
