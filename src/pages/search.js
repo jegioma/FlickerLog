@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/icons'
 import { useDisclosure } from '@chakra-ui/react'
 // import GenreDrawer from '@/components/genreDrawer'
-import { useState, useEffect, memo } from 'react'
+import { useState, useEffect, memo, useMemo } from 'react'
 import ResultItem from '@/components/resultItem'
 
 export default function Search() {
@@ -23,13 +23,22 @@ export default function Search() {
   const [ totalResults, setTotalResults ] = useState(0);
   const [genreMap, setGenreMap] = useState(new Map());
   const [ dataLoaded, setDataLoaded ] = useState(false);
-  const options = {
+  // const options = {
+  //     method: 'GET',
+  //     headers: {
+  //       accept: 'application/json',
+  //       Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
+  //     }
+  //   };
+  const options = useMemo(() => {
+    return {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-      }
+        Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN,
+      },
     };
+  }, []); // Empty dependency array means it's only created once
 
     useEffect(() => {
         if (!dataLoaded) {
@@ -67,7 +76,7 @@ export default function Search() {
             })
             .catch((error) => console.log(error));
         }
-      }, [currentPage, dataLoaded, searchName]);
+      }, [currentPage, dataLoaded, searchName, options]);
       
 
     const handleSearch = (event) => {

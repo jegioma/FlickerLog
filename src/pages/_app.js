@@ -1,7 +1,7 @@
 import { 
   ChakraProvider, CSSReset, Box
 } from '@chakra-ui/react'
-import theme from '@/pages/service/themeConfig'
+import theme from '@/components/themes/themeConfig'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 

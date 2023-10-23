@@ -81,7 +81,7 @@ export const DisplayList = () => {
                 <Card border='solid orange 3px' width={40} height={100} borderRadius={20}></Card> */}
                  {
              watchlists.map((list) => (
-            <Card border='solid orange 3px' width={40} height={100} borderRadius={20}>
+            <Card key={list.listName} border='solid orange 3px' width={40} height={100} borderRadius={20}>
                 <Stack align='center'>
                 <Heading fontSize='lg' color='#000'>{list.listName}</Heading>
                 </Stack>
