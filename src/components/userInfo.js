@@ -11,7 +11,9 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import AvatarProfilePicture from './avatar'; // Correct import path for AvatarProfilePicture component
-import { db, doc, getDoc } from '../configure/firebase.js'; // Firebase import for fetching user data
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { db } from '../configure/firebase'; // Firebase import for fetching user data
 
 const backgroundImageUrl =
   'https://d28htnjz2elwuj.cloudfront.net/wp-content/uploads/2019/03/11123440/Georgia-Gwinnett-College-221x221.jpg';
@@ -20,12 +22,12 @@ const UserInfo = ({ registeredUserName }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const auth = getAuth();
 
   useEffect(() => {
     async function fetchUserAvatar() {
       try {
-        // Fetch user data from Firebase based on the registeredUserName
-        const userDocRef = doc(db, 'Users', registeredUserName); // Assuming registeredUserName is the document ID of the user
+        const userDocRef = doc(db, 'Users', registeredUserName);
         const userDocSnapshot = await getDoc(userDocRef);
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
@@ -42,14 +44,26 @@ const UserInfo = ({ registeredUserName }) => {
   }, [registeredUserName]);
 
   function signOutUser() {
-    // Your signOut logic here
     router.push('/login');
   }
 
-  const handleAvatarChange = (avatarUrl) => {
-    setSelectedAvatar(avatarUrl);
-    setIsModalOpen(false);
-    // Update user avatar in Firebase if needed
+  const handleAvatarChange = async (avatarUrl) => {
+    setIsModalOpen(false); // Close the modal first
+    try {
+      // Fetch user document reference
+      const userDocRef = doc(db, 'Users', registeredUserName);
+
+      // Update user document with new avatar URL
+      await updateDoc(userDocRef, {
+        avatarUrl: avatarUrl,
+      });
+
+      // Set new avatar URL in local state
+      setSelectedAvatar(avatarUrl);
+      console.log('Avatar saved successfully:', avatarUrl);
+    } catch (error) {
+      console.error('Error updating user avatar:', error);
+    }
   };
 
   return (
