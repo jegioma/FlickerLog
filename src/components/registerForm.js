@@ -10,7 +10,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 
-import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
+import {db, addDoc, collection,getDocs,auth,where,query} from '../configure/firebase.js';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
 
 import ShowAlert from './alert.js';
@@ -30,10 +30,11 @@ export const RegisterForm = () => {
     const [showGoodAlert, setShowgoodAlert] = useState('no');
     const [showBadAlert, setShowBadAlert] = useState('no');
     const [errorMessage, setErrorMessage] = useState('');
+    const [allName, setAllName] = useState([]);
 
     // define the collection from firebase
     const userRef = collection(db, "Users");
-
+    
 
     // Create authentication user with email and password
     const Register = async () => {
@@ -92,6 +93,42 @@ export const RegisterForm = () => {
       }
     }
 
+    const getUserNames = async () => {
+      
+      // setup query to get specific user info
+      try {
+      
+        const q = query(userRef, where("userName", "==",userName.toLowerCase()));
+        const querySnapshot = await getDocs(q);
+        const dataArray = [];
+        // get the data array from the querySnapshot only
+        querySnapshot.docs.map((doc) => {
+          
+          const data = doc.data();
+          dataArray.push(data);
+ 
+        });
+        setAllName(dataArray); // assign the data to a usestate
+      } catch (error) {
+        console.log("Error getting documents: ", error);
+      }
+   
+    }
+
+  function checkUserName(){
+    
+ 
+    getUserNames()
+
+    if (allName.length === 0){
+      console.log(allName);
+      console.log('empty');
+        return true;
+    }
+   
+      return false;
+  }
+    
 
     return (
       <Box>
@@ -137,7 +174,13 @@ export const RegisterForm = () => {
               if (!ValidateEmail(email)) {
                 setShowgoodAlert('no');
                 setShowBadAlert('yes');
-               setErrorMessage('Please enter a valid email address');
+                setErrorMessage('Please enter a valid email address');
+              }
+
+              else if (checkUserName()===false){
+                setShowgoodAlert('no');
+                setShowBadAlert('yes');
+                setErrorMessage('User name already exist, please use a different user name');
               }
                // Call checkPassword function
               else if (vertifyPassword) {

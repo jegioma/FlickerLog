@@ -52,35 +52,20 @@ export default function Header() {
       style={{ backgroundColor: '#090b07' }} // Set the background color of the GIF
     />
   </Center>
-
-  <HStack spacing="1rem">
-    <Breadcrumb fontSize="xl">
+      
+      <HStack spacing="1rem">
+      <Breadcrumb fontSize='xl'>
       <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-        <Link href="/">Home</Link>
-      </BreadcrumbItem>
-      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-      {user ? (
+                    <Link href='/'>Home</Link>
+                </BreadcrumbItem>
+                <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
+                {user ? (
               <Link href="/profile">Profile</Link>
             ) : (
               <Link href="/login">Profile</Link>
             )}
-      </BreadcrumbItem>
-      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-        <Link href="/search">Search</Link>
-        <BreadcrumbSeparator />
-      </BreadcrumbItem>
-    </Breadcrumb>
-    </HStack>
-      
-      <HStack spacing="1rem">
-      <Breadcrumb fontSize='xl'>
-                <BreadcrumbItem _hover={{backgroundColor: '#153f00',color: 'Tomato',}}>
-                    <Link href='/'>Home</Link>
-                </BreadcrumbItem>
-                <BreadcrumbItem _hover={{ backgroundColor: '#153f00', color: 'Tomato' }}>
-      
           </BreadcrumbItem>
-                <BreadcrumbItem _hover={{backgroundColor: '#153f00',color: 'Tomato',}}>
+          <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
                     <Link href='/search'>Search</Link>
                     <BreadcrumbSeparator />
                 </BreadcrumbItem>
