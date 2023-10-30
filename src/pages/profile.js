@@ -1,37 +1,23 @@
-// import {
-//     Box
-// } from '@chakra-ui/react'
-
-// export default function Profile() {
-
-//     return (
-//         <Box>
-            
-//         </Box>
-//     )
-// }
-
-import { Box, Button, Image } from "@chakra-ui/react";
-import { useState } from 'react';
-
-const Carousel = ({ images }) => {
-  const [index, setIndex] = useState(0);
-
-  const nextImage = () => {
-    setIndex((current) => (current + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setIndex((current) => (current - 1 + images.length) % images.length);
-  };
+import {
+  Box, SimpleGrid, Grid, GridItem, VStack, HStack, Stack, Text, Heading, Image, Card, IconButton,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
+import UserInfo from '@/components/userInfo';
+import CreateWatchList from '@/components/createWatchList';
+import {DisplayList} from '@/components/displayWatchlist';
+export default function Profile() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box>
-      <Button onClick={prevImage}>Previous</Button>
-      <Image src={images[index]} alt="" />
-      <Button onClick={nextImage}>Next</Button>
+    <Box height='100vh' width='100vw' padding='3rem' border='solid red 3px'>
+      <Grid templateColumns='repeat(2, 1fr)' gap={5} height='90%'>
+        <UserInfo />
+        <GridItem>
+          <DisplayList/>
+        </GridItem>
+      </Grid>
+      
     </Box>
   );
-};
-
-export default Carousel;
+}
