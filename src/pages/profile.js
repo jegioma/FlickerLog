@@ -10,7 +10,7 @@ export default function Profile() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box height='100vh' width='100vw' padding='3rem' border='solid red 3px'>
+    <Box height='100vh' width='90vw' padding='3rem'>
       <Grid templateColumns='repeat(2, 1fr)' gap={5} height='90%'>
         <UserInfo />
         <GridItem>

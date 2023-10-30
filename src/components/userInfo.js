@@ -53,7 +53,7 @@ const router = useRouter();
 }
   return(
     <GridItem height='100%'>
-              <Box border='blue 3px solid' width='20rem' borderRadius={15} backgroundColor='#d9d9d9'>
+              <Box border='black 3px solid' width='20rem' borderRadius={15} backgroundColor='#d9d9d9'>
                 <VStack>
                   <Heading color='#000' marginBottom='1rem'>{userInfo.userName}</Heading>
                   <Image 
