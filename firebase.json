@@ -1,5 +1,9 @@
 {
   "hosting": {
+<<<<<<< HEAD
+    "public": "src"
+    
+=======
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -10,5 +14,6 @@
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
+>>>>>>> c8eef0e462cfbc44b1774e11f1d8d6195b4422a4
   }
 }

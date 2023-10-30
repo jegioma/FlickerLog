@@ -63,8 +63,8 @@ export default function ForgotPasswordForm() {
         >
           Forgot your password?
         </Heading>
-        <Text align='center' fontSize={{ base: 'sm', sm: 'md' }} color={'white'}>
-          You will get an email with a reset link
+        <Text align={'center'} fontSize={{ base: 'sm', sm: 'md' }} color={'white'}>
+          Youll get an email with a reset link
         </Text>
         <FormControl id="email">
           <Input
