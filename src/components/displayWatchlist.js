@@ -17,12 +17,14 @@ import {
   Link,
   Flex,
   UnorderedList,
-  ListItem
+  ListItem,
+  Button
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import UserInfo from '@/components/userInfo';
 import CreateWatchList from '@/components/createWatchList';
-import { db, addDoc, collection, getDocs, auth, query, where } from '../configure/firebase.js';
+import { db, addDoc, collection, getDocs, auth, query, where,deleteDoc,doc } from '../configure/firebase.js';
+
 
 export const DisplayList = () => {
   const [watchlists, setWatchlists] = useState([]);
@@ -38,92 +40,64 @@ export const DisplayList = () => {
     setHoveredMovie(null);
   };
 
-//    // use useEffect to make sure the page automatically show the user info
-//    useEffect(() => {
-//     const getUserInfo = async () => {
-      
-//       // setup query to get specific user info
-//       try {
-//         const ListRef = collection(db, "WatchList");
-//         // const q = query(ListRef, where("email", "==",auth?.currentUser?.email));
-//          const q = query(ListRef, where("email", "==",'fwen@ggc.edu'));
 
-//         const querySnapshot = await getDocs(q);
-//         const dataArray = [];
-//         // get the data array from the querySnapshot only
-//         querySnapshot.docs.map((doc) => {
-          
-//           const data = doc.data();
-//           const dataId = doc.id;
-//           dataArray.push({...data, id : dataId});
- 
-//         });
-//         setWatchlists(dataArray); // assign the data to a usestate
-//       } catch (error) {
-//         console.log("Error getting documents: ", error);
-//       }
-     
-//     }
-//     getUserInfo()
-
-// }, [watchlists]
-// )
-
-
-
-//  async function readMovieList  (listID){
-//     console.log('listID',listID);
-//     const movieRef = collection(db, "WatchList", listID, "MovieDetail");
-//     const querySnapshot = await getDocs(movieRef);
-
-//     querySnapshot.forEach((doc, inedx) => {
-//       const data = doc.data();
-//       const docID = doc.id;
-//       movieDetail.push({ ...data, id: docID });
-//     });
-//     setMovieDetail(movieDetail);
-//   }
 
 useEffect(() => {
-  const getUserInfo = async () => {
-    try {
-      const ListRef = collection(db, "WatchList");
-      const q = query(ListRef, where("email", "==", auth?.currentUser?.email)); // Replace with your actual email
-      const querySnapshot = await getDocs(q);
-      const dataArray = [];
+  console.log('1')
 
-      for (const doc of querySnapshot.docs) {
-        const data = doc.data();
-        const dataId = doc.id;
-        dataArray.push({ ...data, id: dataId });
-      }
-
-      // Initialize a 2D array
-      const watchlistsWithMovieDetail = await Promise.all(
-        dataArray.map(async (watchlist) => {
-          const listID = watchlist.id;
-          const movieRef = collection(db, "WatchList", listID, "MovieDetail");
-          const querySnapshot = await getDocs(movieRef);
-          const movieDetail = [];
-
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            const docID = doc.id;
-            movieDetail.push({ ...data, id: docID });
-          });
-
-          return { ...watchlist, movieDetail };
-        })
-      );
-
-      setWatchlists(watchlistsWithMovieDetail);
-    } catch (error) {
-      console.log("Error getting documents: ", error);
-    }
-  };
-
-  getUserInfo();
+  getWatchInfo();
 }, []);
+
+const getWatchInfo = async () => {
+  try {
+    const ListRef = collection(db, "WatchList");
+    const q = query(ListRef, where("email", "==", auth?.currentUser?.email)); 
+    const querySnapshot = await getDocs(q);
+    const dataArray = [];
+
+    for (const doc of querySnapshot.docs) {
+      const data = doc.data();
+      const dataId = doc.id;
+      dataArray.push({ ...data, id: dataId });
+    }
+
+    // Initialize a 2D array
+    const watchlistsWithMovieDetail = await Promise.all(
+      dataArray.map(async (watchlist) => {
+        const listID = watchlist.id;
+        const movieRef = collection(db, "WatchList", listID, "MovieDetail");
+        const querySnapshot = await getDocs(movieRef);
+        const movieDetail = [];
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const docID = doc.id;
+          movieDetail.push({ ...data, id: docID });
+        });
+
+        return { ...watchlist, movieDetail };
+      })
+    );
+
+    setWatchlists(watchlistsWithMovieDetail);
+  } catch (error) {
+    console.log("Error getting documents: ", error);
+  }
+};
+
+
+
+  const deleteList = async (listID) => {
+    try{
+    await deleteDoc(doc(db, "WatchList", listID));
+
+      console.log("List successfully deleted!");
+      getWatchInfo();
+    } catch (error) {
+      console.log("Error deleting documents: ", error);
+    }
+
+  }
 
 
 return (
@@ -135,12 +109,12 @@ return (
   >
     <VStack>
       <Heading color="#000">Your Watchlists</Heading>
-      <SimpleGrid columns={3} spacing={10} padding="2rem">
+      <SimpleGrid columns={2} spacing={20} padding="2rem">
         <Card
           border="solid black 3px"
-          width={40}
-          height={100}
-          borderRadius={20}
+          width={'280px'}
+          height={'150px'}
+          borderRadius={10}
           padding={2}
           _hover={{
             backgroundColor: "pink",
@@ -160,10 +134,10 @@ return (
         {watchlists.map((list,index) => (
           <Card
             border="solid black 3px"
-            width={40}
-            height={100}
+            width={'280px'}
+            height={'150px'}
             borderRadius={10}
-            align="left"
+            
             key={list.listName}
           >
             <Box
@@ -190,9 +164,13 @@ return (
                   paddingLeft: "5px",
                 }}
               >
-                <Text align={"center"} color={"Green"} fontWeight={"bold"}>
+                <Box align={'center'}>
+                
+                <Text color={"Black"} fontWeight={"bold"}  align={'center'} fontSize={'1.2em'}>
                   {list.listName}
                 </Text>
+                <Button color='Black' backgroundColor={'white'} borderRadius={'5px'} _hover={{color:'red', backgroundColor:'grey'}} onClick={(e)=>{deleteList(list.id)}} >Remove List</Button>
+                </Box>
                 <UnorderedList>
                 {list.movieDetail.map((movie, index) => (
                   <ListItem>
@@ -216,8 +194,8 @@ return (
                         top="0"
                         transition="opacity 0.2s"
                         zIndex={1}
-                        width={"100%"}
-                        height={"250%"}
+                        width={"80%"}
+                        height={"200%"}
                       
                       >
                         <Box margin={"1em"} align={'center'}>
@@ -225,7 +203,7 @@ return (
                           <Image
                           src={movie.image}
                           width={"200px"}
-                          height={"180px"}
+                          height={"200px"}
                         />
                         </Box>
                        
@@ -244,7 +222,7 @@ return (
         
       </SimpleGrid>
     </VStack>
-    <CreateWatchList isOpen={isOpen} onClose={onClose} />
+    <CreateWatchList isOpen={isOpen} onClose={(e)=>{onClose();getWatchInfo()}} />
   </Box>
 );
 }

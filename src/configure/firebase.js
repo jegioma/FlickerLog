@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {getAuth} from 'firebase/auth';
-import {getFirestore, collection as collectionRef, addDoc as addDocRef, getDocs as docs, getDoc, where as wheres ,query as querys, doc as docc, updateDoc} from 'firebase/firestore';
+import {getFirestore, collection as collectionRef, addDoc as addDocRef, getDocs as docs, getDoc, where as wheres ,query as querys, doc as docc, updateDoc, deleteDoc as deleteDocRef} from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,3 +34,4 @@ export const where = wheres
 export const query = querys
 export const doc = docc
 export const updateDocRef = updateDoc
+export const deleteDoc = deleteDocRef
