@@ -195,8 +195,8 @@ return (
                 </Text>
                 <UnorderedList>
                 {list.movieDetail.map((movie, index) => (
-                  <ListItem>
-                  <div key={movie.Title}>
+                  <ListItem key={movie.Title}>
+                  <div >
                     <Link
                       _hover={{ color: hoveredMovie === movie.Title ? "green" : "initial", backgroundColor: hoveredMovie === movie.Title ? "pink" : "initial", borderRadius: "5px"}}
                       onMouseEnter={() => handleMouseEnter(movie.Title)}
@@ -224,6 +224,7 @@ return (
                           <Text fontWeight={"bold"} >{movie.Title}</Text>
                           <Image
                           src={movie.image}
+                          alt={movie.Title}
                           width={"200px"}
                           height={"180px"}
                         />
