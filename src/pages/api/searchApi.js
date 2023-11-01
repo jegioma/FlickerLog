@@ -2,7 +2,7 @@ const omdbKey = process.env.NEXT_PUBLIC_OMDB_KEY;
 
 export async function fetchMovieDetails(movie) {
   try {
-    const response = await fetch(`http://www.omdbapi.com/?t=${movie}&type=movie&apikey=${omdbKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?t=${movie}&type=movie&apikey=${omdbKey}`);
     const data = await response.json();
     console.log(data); // Optional: you can remove this line
     return data;
@@ -14,7 +14,7 @@ export async function fetchMovieDetails(movie) {
 
 export async function fetchShowDetails(tv) {
   try {
-    const response = await fetch(`http://www.omdbapi.com/?t=${tv}&type=series&apikey=${omdbKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?t=${tv}&type=series&apikey=${omdbKey}`);
     const data = await response.json();
     console.log(data); // Optional: you can remove this line
     return data;
