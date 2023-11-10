@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, doc, updateDoc } from 'firebase/firestore';
-import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 import {
   Box,
   Modal,
@@ -16,15 +13,16 @@ import {
   GridItem,
   Image,
 } from '@chakra-ui/react';
+import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
 const AvatarProfilePicture = ({ isOpen, onClose, onSave }) => {
   const [imageSets, setImageSets] = useState([]);
   const [selectedAvatar, setSelectedAvatar] = useState(null);
-  const auth = getAuth();
-  const db = getFirestore();
-  const storage = getStorage();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    const storage = getStorage();
     const storageRef = ref(storage, 'images1');
     listAll(storageRef)
       .then((result) => {
@@ -40,34 +38,27 @@ const AvatarProfilePicture = ({ isOpen, onClose, onSave }) => {
       })
       .catch((error) => {
         console.error('Error fetching images:', error);
+        setError('Error fetching images. Please try again later.');
       });
-  }, [storage]);
+  }, []);
 
   const handleAvatarSelection = (avatarUrl) => {
+    console.log('Selected Avatar:', avatarUrl);
     setSelectedAvatar(avatarUrl);
   };
 
   const saveSelection = async () => {
     if (selectedAvatar) {
-      const user = auth.currentUser;
-      if (user) {
-        const userDocRef = doc(db, 'Users', user.uid);
-        try {
-          await updateDoc(userDocRef, {
-            avatarUrl: selectedAvatar,
-          });
-          setSelectedAvatar(null);
-          onSave(selectedAvatar);
-          onClose(); // Close the modal after saving the avatar
-          console.log('Avatar saved successfully:', selectedAvatar);
-        } catch (error) {
-          console.error('Error saving avatar:', error);
-          if (error.code === 'permission-denied') {
-            console.error('User does not have permission to update avatar.');
-          } else {
-            console.error('Unknown error occurred while saving avatar.');
-          }
-        }
+      setIsLoading(true);
+      try {
+        onSave(selectedAvatar); // Ensure onSave is called with the selectedAvatar
+        onClose(); // Close the modal after saving the avatar
+        console.log('Avatar saved successfully:', selectedAvatar);
+      } catch (error) {
+        console.error('Error saving avatar:', error);
+        setError('Error saving avatar. Please try again later.');
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -76,33 +67,37 @@ const AvatarProfilePicture = ({ isOpen, onClose, onSave }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent backgroundColor={'black'}>
-      <ModalHeader color="seagreen">Choose your profile avatar</ModalHeader>
+        <ModalHeader color="seagreen">Choose your profile avatar</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          {imageSets.map((imageSet, setIndex) => (
-            <Grid key={setIndex} templateColumns="repeat(3, 1fr)" gap={4} mb={4}>
-              {imageSet.map((avatarUrl, index) => (
-                <GridItem key={index}>
-                  <Box
-                    borderWidth={selectedAvatar === avatarUrl ? '2px' : '0px'}
-                    borderColor={selectedAvatar === avatarUrl ? 'green.500' : 'transparent'}
-                    cursor="pointer"
-                    _hover={{
-                      borderColor: 'green.500',
-                    }}
-                    onClick={() => handleAvatarSelection(avatarUrl)}
-                  >
-                    <Image
-                      src={avatarUrl}
-                      alt={`Avatar ${setIndex + 1}-${index + 1}`}
-                      boxSize="150px"
-                      objectFit="cover"
-                    />
-                  </Box>
-                </GridItem>
-              ))}
-            </Grid>
-          ))}
+          {error ? (
+            <Box color="red.500">{error}</Box>
+          ) : (
+            imageSets.map((imageSet, setIndex) => (
+              <Grid key={setIndex} templateColumns="repeat(3, 1fr)" gap={4} mb={4}>
+                {imageSet.map((avatarUrl, index) => (
+                  <GridItem key={index}>
+                    <Box
+                      borderWidth={selectedAvatar === avatarUrl ? '2px' : '0px'}
+                      borderColor={selectedAvatar === avatarUrl ? 'green.500' : 'transparent'}
+                      cursor="pointer"
+                      _hover={{
+                        borderColor: 'green.500',
+                      }}
+                      onClick={() => handleAvatarSelection(avatarUrl)}
+                    >
+                      <Image
+                        src={avatarUrl}
+                        alt={`Avatar ${setIndex + 1}-${index + 1}`}
+                        boxSize="150px"
+                        objectFit="cover"
+                      />
+                    </Box>
+                  </GridItem>
+                ))}
+              </Grid>
+            ))
+          )}
         </ModalBody>
 
         <ModalFooter>
@@ -110,19 +105,20 @@ const AvatarProfilePicture = ({ isOpen, onClose, onSave }) => {
             colorScheme="yellow"
             mr={3}
             _hover={{
-              backgroundColor: 'green.500', // Change the background color to green when hovered
+              backgroundColor: 'green.500',
             }}
             onClick={saveSelection}
-            isDisabled={!selectedAvatar}
+            isDisabled={!selectedAvatar || isLoading || error}
           >
-            Save
+            {isLoading ? 'Saving...' : 'Save'}
           </Button>
           <Button
             onClick={onClose}
             colorScheme="yellow"
             _hover={{
-              backgroundColor: 'red.500', // Change the background color to red when hovered
+              backgroundColor: 'red.500',
             }}
+            isDisabled={isLoading}
           >
             Cancel
           </Button>

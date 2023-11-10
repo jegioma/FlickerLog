@@ -21,6 +21,7 @@ const backgroundImageUrl =
 const UserInfo = ({ registeredUserName }) => {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const auth = getAuth();
 
@@ -49,20 +50,18 @@ const UserInfo = ({ registeredUserName }) => {
 
   const handleAvatarChange = async (avatarUrl) => {
     setIsModalOpen(false); // Close the modal first
+    setIsLoading(true);
     try {
-      // Fetch user document reference
       const userDocRef = doc(db, 'Users', registeredUserName);
-
-      // Update user document with new avatar URL
       await updateDoc(userDocRef, {
         avatarUrl: avatarUrl,
       });
-
-      // Set new avatar URL in local state
-      setSelectedAvatar(avatarUrl);
+      setSelectedAvatar(avatarUrl); // Update the selectedAvatar state with the new URL
       console.log('Avatar saved successfully:', avatarUrl);
     } catch (error) {
       console.error('Error updating user avatar:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -94,7 +93,8 @@ const UserInfo = ({ registeredUserName }) => {
               height="200px"
               marginTop="-2em"
             >
-              <Image src={selectedAvatar || '/alien.png'} alt="avatar image" objectFit="cover" width="100%" height="100%" />
+            <Image src={selectedAvatar || ''} alt="avatar image" objectFit="cover" width="100%" height="100%" />
+
             </Box>
             <Text color="seagreen" fontWeight="bold" fontSize="20px" marginTop="3.5em">
               Member Since: Member Since Date
