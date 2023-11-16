@@ -1,10 +1,28 @@
 const omdbKey = process.env.NEXT_PUBLIC_OMDB_KEY;
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
+  }
+};
 
 export async function fetchMovieDetails(movie) {
   try {
-    const response = await fetch(`http://www.omdbapi.com/?t=${movie}&type=movie&apikey=${omdbKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?t=${movie}&type=movie&apikey=${omdbKey}`);
     const data = await response.json();
-    console.log(data); // Optional: you can remove this line
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function fetchMovieDeets(id) {
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
+    const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -14,9 +32,8 @@ export async function fetchMovieDetails(movie) {
 
 export async function fetchShowDetails(tv) {
   try {
-    const response = await fetch(`http://www.omdbapi.com/?t=${tv}&type=series&apikey=${omdbKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?t=${tv}&type=series&apikey=${omdbKey}`);
     const data = await response.json();
-    console.log(data); // Optional: you can remove this line
     return data;
   } catch (error) {
     console.log(error);

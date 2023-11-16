@@ -18,10 +18,10 @@ import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
 
 
 
-export default function CreateWatchList({ isOpen, onClose }) {
+export default function CreateWatchList({ isOpen, onClose,email }) {
     const [listName, setListName] = useState('');
     const listRef = collection(db, "WatchList");
-    const email = auth?.currentUser?.email;
+   
 
 
   // Save list information to firebase firestore

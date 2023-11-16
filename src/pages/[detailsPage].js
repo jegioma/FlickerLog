@@ -1,9 +1,16 @@
 import {
-    Box, HStack, VStack, Container, Image, Card, Text, Heading, SimpleGrid, UnorderedList, ListItem
+    Box, HStack, VStack, Text, Heading, useDisclosure, useToast,
+    UnorderedList, ListItem, Button, Menu, MenuButton, MenuList, MenuItem,
 } from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import { auth } from '@/configure/firebase';
+import AlertDialogBox from '@/components/alertDialogBox';
+import { addItemToList } from './api/accountApi';
 import { fetchMovieDetails, fetchShowDetails, formatDateString, formatGenreString } from './api/searchApi';
+import { getLists } from './api/accountApi';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState, useRef } from 'react';
 
 export default function DetailsPage() {
     const router = useRouter();
@@ -11,52 +18,68 @@ export default function DetailsPage() {
     const [ resultDetails, setResultsDetails ] = useState();
     const genreString = resultDetails?.Genre || ''; // Get the genre string, or use an empty string if it's undefined
     const genreNames = formatGenreString(genreString);
-    // const options = {
-    //     method: 'GET',
-    //     headers: {
-    //       accept: 'application/json',
-    //       Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-    //     }
-    //   };
+    const [ list, setList ] = useState([]);
+    const user = auth.currentUser;
+    const toast = useToast();
+    const { onOpen, isOpen, onClose } = useDisclosure();
+    const handleAddItem = async (item) => {
+        const itemAdded = await addItemToList(resultDetails, item);
+        toast({
+            title: itemAdded.success ? 'Success' : 'Error',
+            description: itemAdded.message,
+            status: itemAdded.success ? 'success' : 'error',
+            duration: 3000,
+            position: 'top-right',
+            isClosable: true,
+        })
+    };
 
-  useEffect(() => {
-    if (type === 'movie') {
-        fetchMovieDetails(name)
-            .then((resultData) => {
-                setResultsDetails(resultData);
-                // setGenreNames(resultDetails?.Genre);
-            }).catch((error) => {
-                console.log(error);
-            });
+    useEffect(() => {
+        if (type === 'movie') {
+            fetchMovieDetails(name)
+                .then((resultData) => {
+                    setResultsDetails(resultData);
+                    console.log(resultData);
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
+        if (type === 'tv') {
+            fetchShowDetails(name)
+                .then((resultData) => {
+                    setResultsDetails(resultData);
+                }).catch((error) => {
+                    console.log(error);
+                });
+        }
+        if (user) {
+            const fetchList = async () => {
+                try {
+                    const listData = await getLists();
+                    setList(listData);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        fetchList();
     }
-    if (type === 'tv') {
-        fetchShowDetails(name)
-            .then((resultData) => {
-                setResultsDetails(resultData);
-                // setGenreNames(resultDetails?.Genre);
-            }).catch((error) => {
-                console.log(error);
-            });
-    }
-  }, [name, type, id]);
+  }, [name, type, id, user]);
 
   return (
     <Box height='100vh' width='100vw' padding='3rem' >
       <Box backgroundColor='#d9d9d9' width='100%' height='100%' borderRadius={15}>
         <HStack  padding='1rem' align="flex-start" justify="flex-start">
-            <Image
-                src={resultDetails?.Poster ? resultDetails?.Poster : '/imageNA.jpg'}
-                width={300}
-                height={400}
-                alt={resultDetails?.title}
-                fallbackSrc='/imageNA.jpg'
-                border='ridge 5px #000'
-            />
+        <Image
+            src={resultDetails?.Poster ? resultDetails?.Poster : '/imageNA.jpg'}
+            width={300}
+            height={400}
+            alt='Poster Image'
+        />
             <VStack height={400} align='flex-start' padding='1rem' width='100%'>
                 <Heading>{resultDetails?.Title}</Heading>
                 <HStack spacing={10}>
                     <Text>{resultDetails?.Released ? 'Released: ' + formatDateString(resultDetails.Released) : 'Date not available'}</Text>
-                    <Text>Runtime: {resultDetails?.Runtime}</Text>
+                    <Text>Runtime: {resultDetails?.runtime} minutes</Text>
                     <Text>Rated: {resultDetails?.Rated}</Text>
                     <Text>{resultDetails?.BoxOffice ? 'Box Office: ' + resultDetails?.BoxOffice : ''}</Text>
                 </HStack>
@@ -73,21 +96,50 @@ export default function DetailsPage() {
                     ) : null
                     )}
                 </UnorderedList>
-                <VStack border='solid 1px #000' align='flex-start' marginTop={3} padding={3} borderRadius={10}>
                     <Text textDecor='underline'>Synopsis</Text>
                     <Text>{resultDetails?.Plot}</Text>
-                </VStack>
             </VStack>
         </HStack>
-        <HStack padding='1rem' align="flex-start" justify="flex-start">
+        <HStack justifyContent='space-between' padding='1rem' display='inline-flex' width='100%' >
+        {resultDetails?.Ratings && resultDetails?.Ratings.length > 0 ? (
             <HStack>
-                {/* {
-                    resultDetails?.Ratings.map((rating, index) => 
-                        rating ? <Text key={index} border='solid green 3px' borderRadius={10} padding={3}>{rating.Source}: {rating.Value}</Text> : null
-                    )
-                } */}
+            {resultDetails.Ratings.map((rating, index) =>
+                rating ? (
+                <Text fontWeight='bold' key={index} border='solid 1px black' borderRadius={10} padding={1}>
+                    {index === 0
+                    ? 'iMDB'
+                    : index === 1
+                    ? 'Rotten Tomatoes'
+                    : index === 2
+                    ? 'Metacritics'
+                    : ''}: {rating.Value}
+                </Text>
+                ) : null
+            )}
             </HStack>
+        ) : (
+            <Text>No ratings available</Text>
+        )}
+        {user ? (
+            <Menu>
+                <MenuButton colorScheme='yellow' alignSelf='end' as={Button} rightIcon={<HamburgerIcon />} >Add to Watchlist</MenuButton>
+                <MenuList>
+                    {list.map((item) => (
+                        <MenuItem key={item.id}
+                            onClick={() => handleAddItem(item)}
+                        >{item.listName}</MenuItem>
+                    ))
+
+                    }
+
+                </MenuList>
+            </Menu>
+            ) : (
+                <Button colorScheme='yellow' onClick={onOpen} rightIcon={<HamburgerIcon />}>Add to WatchList</Button>
+                )
+        }
         </HStack>
+        <AlertDialogBox isOpen={isOpen} onClose={onClose} />
       </Box>
     </Box>
   );
