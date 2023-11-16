@@ -1,10 +1,4 @@
-const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-    }
-  };
+const omdbKey = process.env.NEXT_PUBLIC_OMDB_KEY;
 
 export async function fetchMovieDetails(movie) {
   try {
@@ -59,7 +53,7 @@ export async function fetchShowDetails(tv) {
 //     }
 //   }
 
-export function formateDate(dateString) {
+export function formatDate(dateString) {
     let date = dateString.split('-'); //split dateSting by '-' into array
     return date.splice(1).join('-') + '-' + date[0]; //splice array from second element (1) and join MM & DD with '-', then adds the first in array (0) to end
 }

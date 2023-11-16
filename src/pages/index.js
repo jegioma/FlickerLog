@@ -12,22 +12,39 @@ function CarouselWithHover({ images, imdbIds }) {
   const [movieInfo, setMovieInfo] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const fetchMovieInfo = async (index) => {
-    try {
-      const response = await axios.get(`http://www.omdbapi.com/?i=${imdbIds[index]}&apikey=9dce2383`);
-      setMovieInfo(response.data);
-    } catch (error) {
-      console.error('Error fetching movie info:', error);
-    }
-  };
+  // const fetchMovieInfo = async (index) => {
+  //   try {
+  //     const response = await axios.get(`http://www.omdbapi.com/?i=${imdbIds[index]}&apikey=9dce2383`);
+  //     setMovieInfo(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching movie info:', error);
+  //   }
+  // };
 
+  // useEffect(() => {
+  //   if (isHovered) {
+  //     fetchMovieInfo(currentIndex);
+  //   } else {
+  //     setMovieInfo(null);
+  //   }
+  // }, [isHovered, currentIndex, imdbIds]);
   useEffect(() => {
+    const fetchMovieInfo = async (index) => {
+      try {
+        const response = await axios.get(`http://www.omdbapi.com/?i=${imdbIds[index]}&apikey=9dce2383`);
+        setMovieInfo(response.data);
+      } catch (error) {
+        console.error('Error fetching movie info:', error);
+      }
+    };
+  
     if (isHovered) {
       fetchMovieInfo(currentIndex);
     } else {
       setMovieInfo(null);
     }
   }, [isHovered, currentIndex, imdbIds]);
+  
 
   const handleSlideChange = (index) => {
     setCurrentIndex(index);
