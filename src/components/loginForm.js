@@ -71,7 +71,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
             <FormLabel>Email</FormLabel>
             <Input type='email' placeholder='📧 Enter your email' textAlign={'left'} 
             onChange={(e) => setEmail(e.target.value)}
-            onkeyDown={onKeyFunction}/>
+            onKeyDown={onKeyFunction}/>
           </FormControl>
   
           <FormControl>
@@ -81,7 +81,7 @@ export const LoginForm = ({ showPassword, togglePasswordVisibility}) => {
                 type={showPassword ? 'text' : 'password'}
                 placeholder='Enter your password'
                 onChange={(e) =>setPassword(e.target.value)}
-                onkeyDown={onKeyFunction}
+                onKeyDown={onKeyFunction}
               />
               <InputRightElement>
                 <IconButton

@@ -13,6 +13,7 @@ import {
   GridItem,
   Image,
 } from '@chakra-ui/react';
+
 import { getStorage, ref, listAll, getDownloadURL } from 'firebase/storage';
 
 const AvatarProfilePicture = ({ isOpen, onClose, onSave }) => {

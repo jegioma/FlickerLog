@@ -30,7 +30,7 @@ export default function GenreDrawer({isOpen, onClose}) {
                 setGenreResults(genres);
             });
         }
-    }, [isOpen]);
+    }, [isOpen, genreResults.length]);
     
     
     // const handleGenreClick = index => {

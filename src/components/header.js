@@ -8,10 +8,28 @@ import {
   import 'react-lazy-load-image-component/src/effects/blur.css'; // Import CSS for image effects
   import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'; // Import Bootstrap components
   import Link from 'next/link';
-
-
+  import { Router } from 'react-router-dom';
+  import { auth } from '../configure/firebase.js';
+  import { useState, useEffect } from 'react';
 export default function Header() {
-   
+  const [user, setUser] = useState(""); // Initialize user state
+
+  // check if user is logged in, if not then route to login page instead of an empty profile page
+  useEffect(() => {
+      const checkLogin = () => {
+          auth.onAuthStateChanged(user => {
+              if (user) {
+                  setUser(user);
+              } else {
+                  setUser("");
+              }
+          })
+
+      }
+  checkLogin()
+  }, []);
+
+
     return (
         <Flex
             as="nav"
@@ -34,22 +52,26 @@ export default function Header() {
       style={{ backgroundColor: '#090b07' }} // Set the background color of the GIF
     />
   </Center>
+      
+      <HStack spacing="1rem">
+      <Breadcrumb fontSize='xl'>
+      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
+                    <Link href='/'>Home</Link>
+                </BreadcrumbItem>
+                <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
+                {user ? (
+              <Link href="/profile">Profile</Link>
+            ) : (
+              <Link href="/login">Profile</Link>
+            )}
+          </BreadcrumbItem>
+          <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
+                    <Link href='/search'>Search</Link>
+                    <BreadcrumbSeparator />
+                </BreadcrumbItem>
+            </Breadcrumb>
 
-  <HStack spacing="1rem">
-    <Breadcrumb fontSize="xl">
-      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-        <Link href="/">Home</Link>
-      </BreadcrumbItem>
-      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-        <Link href="/profile">Profile</Link>
-      </BreadcrumbItem>
-      <BreadcrumbItem color='#fff'_hover={{color: '#2E8B57' }}>
-        <Link href="/search">Search</Link>
-        <BreadcrumbSeparator />
-      </BreadcrumbItem>
-    </Breadcrumb>
-
-    <Button
+      <Button
        as ={Link}
         href='/login'
       className="custom-button"
