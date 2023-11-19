@@ -28,19 +28,19 @@ export default function Footer() {
                 {/* Third Column */}
                 <Box>
                     <Text fontSize="xl" mb={2} color={forestGreen}>Connect</Text>
-                    <a href="/github" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Github</a>
-                    <a href="/institution" style={{ display: "block", color: "#2E8B57" }}>Institution</a>
+                    <a href="https://github.com/jegioma/FlickerLog.git" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Github</a>
+                    <a href="https://www.ggc.edu/" style={{ display: "block", color: "#2E8B57" }}>Institution</a>
                 </Box>
 
                 {/* Fourth Column */}
                 <Box>
                     <Text fontSize="xl" mb={2} color={forestGreen}>Powered By</Text>
-                    <a href="/nodejs" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Node.JS</a>
-                    <a href="/react" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>React</a>
-                    <a href="/firebase" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Firebase</a>
-                    <a href="/ChakraUI" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>ChakraUI</a>
-                    <a href="/javascript" style={{ display: "block", color: "#2E8B57" }}>JavaScript</a>
-                    <a href="/TMDB api" style={{ display: "block", color: "#2E8B57" }}>TMDB api</a>
+                    <a href="https://nodejs.org/en" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Node.JS</a>
+                    <a href="https://react.dev/" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>React</a>
+                    <a href="https://firebase.google.com/" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>Firebase</a>
+                    <a href="https://chakra-ui.com/" style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>ChakraUI</a>
+                    <a href="https://code.visualstudio.com/Docs/languages/javascript" style={{ display: "block", color: "#2E8B57" }}>JavaScript</a>
+                    <a href="https://developer.themoviedb.org/docs" style={{ display: "block", color: "#2E8B57" }}>TMDB api</a>
                 </Box>
 
                 {/* Fifth Column */}
@@ -51,7 +51,11 @@ export default function Footer() {
             </Flex>
 
             {/* Copyright Text */}
-            <Text mt={4}>© 2023 FlickerLog. All Rights Reserved.</Text>
+            <Text mt={4}>
+                <a href="/terms" style={{ color: "#2E8B57" }}>Terms</a> | 
+                <a href="/privacy" style={{ color: "#2E8B57" }}> Privacy</a> | 
+                <a href="/contact-us" style={{ color: "#2E8B57" }}> Contact Us</a>
+            </Text>
         </Box>
     );
 }
