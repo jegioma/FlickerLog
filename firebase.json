@@ -1,33 +1,12 @@
 {
-    "hosting": {
-        "public": "src",
-        "ignore": [
-            "firebase.json",
-            "**/.*",
-            "**/node_modules/**"
-        ],
-        "rewrites": [
-            {
-                "source": "**",
-                "destination": "/index.html"
-            }
-        ],
-        "headers": [
-            {
-                "source": "**/*.js",
-                "headers": [
-                    {
-                        "key": "Cache-Control",
-                        "value": "public, max-age=600, s-maxage=1200"
-                    }
-                ]
-            }
-        ],
-        "trailingSlash": false,
-        "cleanUrls": true,
-        "appAssociation": "AUTO",
-        "entryPoint": "index.js"
-    },
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  },
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
