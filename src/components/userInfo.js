@@ -30,13 +30,7 @@ export default function UserInfo({ userID, email }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-<<<<<<< HEAD
-    
-      getUserInfo()
-
-=======
     getUserInfo();
->>>>>>> 4967bf3a96983367afb867db6993197dedbc56c1
   }, []);
 
   const getUserInfo = async () => {
@@ -106,31 +100,3 @@ export default function UserInfo({ userID, email }) {
     </GridItem>
   );
 }
-<<<<<<< HEAD
-  return(
-    <GridItem height='100%'>
-              <Box border='black 3px solid' width='20rem' borderRadius={15} backgroundColor='#d9d9d9'>
-                <VStack>
-                  <Heading color='#000' marginBottom='1rem'>{userInfo.userName}</Heading>
-                  <Image 
-                    borderRadius='full'
-                    src = {userInfo.Url? userInfo.Url : '/alien.png'}
-                    border='dashed cyan 5px'
-                    alt='avatar image'
-                    boxSize='150px'
-                />
-                <Button onClick={onOpen}>Edit Avatar</Button>
-                <Text>Member Since:</Text>
-                <Text>{userInfo.memberSince}</Text>
-                <Button onClick={ (e) =>{signOutUser()}} colorScheme='yellow'>Log Out</Button>
-                </VStack>
-              </Box>
-              
-            <SelectAvatar isOpen={isOpen} onClose={(e)=> {onClose();getUserInfo()}} />
-            </GridItem>
-  )
-  
-}
-
-=======
->>>>>>> 4967bf3a96983367afb867db6993197dedbc56c1
