@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Text, Flex, Divider, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, VStack, Image } from '@chakra-ui/react';
 import Link from 'next/link';
+import { Box, Text, Flex, Image, Divider, Popover, PopoverTrigger, PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, VStack, Center, HStack, } from '@chakra-ui/react';
 
 export default function Footer() {
   const forestGreen = "#228B22"; // Forest Green color
-  
+
   return (
     <Box textAlign="center" mt={4} mb={4} bg="black" p={4} color="white">
       <Flex justify="space-between">
@@ -13,57 +13,158 @@ export default function Footer() {
           <Text fontSize="xl" mb={2} color={forestGreen}>
             FlickerLog
           </Text>
-          <Link href="/home">
-            <div>
-            <a style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
-              Home
-            </a>
-            </div>
-          </Link>
-          <Link href="/aboutus">
-            <div>
-            <a style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
-              About Us
-            </a>
-            </div>
-          </Link>
+          <div>
+            <Link href="/home" passHref>
+              <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
+                Home
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="/aboutus" passHref>
+              <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
+                About Us
+              </div>
+            </Link>
+          </div>
 
           {/* Using Popover for "Settings" link */}
           <Popover>
             <PopoverTrigger>
-              <Link href="#">
-                <div>
-                <a style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
+              <div>
+                <Text style={{ display: 'block', marginBottom: '2px', color: '#2E8B57', cursor: 'pointer' }}>
                   Settings
-                </a>
-                </div>
-              </Link>
+                </Text>
+              </div>
             </PopoverTrigger>
             <PopoverContent border="0" borderRadius="0">
               <PopoverArrow />
               <PopoverCloseButton />
               <PopoverHeader marginTop="0">Login Profile</PopoverHeader>
               <PopoverBody>
-                <Link href="/login">
-                  <div>
-                  <a style={{ display: 'block', color: '#2E8B57' }}>
-                    Login
-                  </a>
-                  </div>
-                </Link>
-                <Link href="/profile">
-                  <div>
-                  <a style={{ display: 'block', color: '#2E8B57' }}>
-                    Profile
-                  </a>
-                  </div>
-                </Link>
+                <div>
+                  <Link href="/login" passHref>
+                    <div style={{ display: 'block', color: '#2E8B57' }}>
+                      Login
+                    </div>
+                  </Link>
+                </div>
+                <div>
+                  <Link href="/profile" passHref>
+                    <div style={{ display: 'block', color: '#2E8B57' }}>
+                      Profile
+                    </div>
+                  </Link>
+                </div>
               </PopoverBody>
             </PopoverContent>
           </Popover>
         </Box>
 
-        {/* ... (similar changes for other columns) */}
+        {/* Second Column */}
+        <Box>
+          <Text fontSize="xl" mb={2} color={forestGreen}>
+            Follow Us
+          </Text>
+          <div>
+            <Link href="/jeancarlo" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                JeanCarlo
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="/nick" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                Nick
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="/kelan" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                Kelan
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="/bradley" passHref>
+              <div style={{ display: "block", color: "#2E8B57" }}>
+                Bradley
+              </div>
+            </Link>
+          </div>
+        </Box>
+
+        {/* Third Column */}
+        <Box>
+          <Text fontSize="xl" mb={2} color={forestGreen}>
+            Connect
+          </Text>
+          <div>
+            <Link href="https://github.com/jegioma/FlickerLog.git" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                Github
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://www.ggc.edu/" passHref>
+              <div style={{ display: "block", color: "#2E8B57" }}>
+                Institution
+              </div>
+            </Link>
+          </div>
+        </Box>
+
+        {/* Fourth Column */}
+        <Box>
+          <Text fontSize="xl" mb={2} color={forestGreen}>
+            Powered By
+          </Text>
+          <div>
+            <Link href="https://nodejs.org/en" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                Node.JS
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://react.dev/" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                React
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://firebase.google.com/" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                Firebase
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://chakra-ui.com/" passHref>
+              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
+                ChakraUI
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://code.visualstudio.com/Docs/languages/javascript" passHref>
+              <div style={{ display: "block", color: "#2E8B57" }}>
+                JavaScript
+              </div>
+            </Link>
+          </div>
+          <div>
+            <Link href="https://developer.themoviedb.org/docs" passHref>
+              <div style={{ display: "block", color: "#2E8B57" }}>
+                TMDB api
+              </div>
+            </Link>
+          </div>
+        </Box>
 
         {/* Fifth Column */}
         <Box>
@@ -84,31 +185,29 @@ export default function Footer() {
       <Divider my={4} borderColor="#2E8B57" />
 
       {/* Copyright Text */}
-      <Text mt={4}>
-        <Link href="/terms">
-          <div>
-          <a style={{ color: "#2E8B57" }}>
-            Terms
-          </a>
-          </div>
-        </Link>{" "}
-        |{" "}
-        <Link href="/privacy">
-          <div>
-          <a style={{ color: "#2E8B57" }}>
-            Privacy
-          </a>
-          </div>
-        </Link>{" "}
-        |{" "}
-        <Link href="/contact-us">
-          <div>
-          <a style={{ color: "#2E8B57" }}>
-            Contact Us
-          </a>
-          </div>
-        </Link>
-      </Text>
+      <Center>
+        <HStack>
+          <Link href="/terms" passHref>
+            <Text as="span" style={{ color: "#2E8B57" }}>
+              Terms
+            </Text>
+          </Link>
+          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
+          <Link href="/privacy" passHref>
+            <Text as="span" style={{ color: "#2E8B57" }}>
+              Privacy
+            </Text>
+          </Link>
+          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
+          <Link href="/contact-us" passHref>
+            <Text as="span" style={{ color: "#2E8B57" }}>
+              Contact Us
+            </Text>
+          </Link>
+        </HStack>
+      </Center>
+
+      {/* Popover for the "Settings" link */}
     </Box>
   );
 }

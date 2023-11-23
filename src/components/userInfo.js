@@ -1,26 +1,17 @@
 import {
   Box,
   SimpleGrid,
-  Grid,
   GridItem,
   VStack,
-  HStack,
-  Stack,
   Text,
   Heading,
   Image,
-  Card,
-  IconButton,
   Button,
-  list,
-  filter,
   useDisclosure,
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-import { db, addDoc, auth, query, where } from "../configure/firebase.js";
-import { getDocs, collection } from "firebase/firestore";
-import { signOut } from "firebase/auth";
+import { db, auth, query, where, getDocs, collection, signOut } from "../configure/firebase.js";
 import { useRouter } from "next/router";
 import SelectAvatar from "./selectAvatar.js";
 
@@ -30,40 +21,42 @@ export default function UserInfo({ userID, email }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    getUserInfo();
-  }, []);
+    const getUserInfo = async () => {
+      // setup query to get specific user info
+      try {
+        const UserRef = collection(db, "Users");
+        const q = query(UserRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
 
-  const getUserInfo = async () => {
-    // setup query to get specific user info
-    try {
-      const UserRef = collection(db, "Users");
-      const q = query(UserRef, where("email", "==", email));
-      const querySnapshot = await getDocs(q);
+        // get the data array from the querySnapshot only
+        querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          setUserInfo(data); // assign the data to a usestate
+        });
+      } catch (error) {
+        console.log("Error getting documents: ", error);
+      }
+    };
 
-      // get the data array from the querySnapshot only
-      querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        setUserInfo(data); // assign the data to a usestate
-      });
-    } catch (error) {
-      console.log("Error getting documents: ", error);
-    }
-  };
+    getUserInfo(); // Call the function directly inside useEffect
 
-  // sign out user and redirect to login page
+  }, [email]); // Add 'email' to the dependency array
+
+  // sign out user and redirect to the login page
   function signOutUser() {
     console.log("sign out");
     signOut(auth);
-    //   console.log('Sign-out successful.')
     router.push("/login");
   }
+
   return (
     <GridItem height="100%">
       <Box
         border="white 3px solid"
         width="20rem"
         borderRadius={15}
-        backgroundColor="#d9d9d9"      >
+        backgroundColor="#d9d9d9"
+      >
         <VStack>
           <Heading color="#000" marginBottom="1rem">
             {userInfo.userName}
@@ -76,10 +69,10 @@ export default function UserInfo({ userID, email }) {
             boxSize="150px"
           />
           <Button onClick={onOpen}>Edit Avatar</Button>
-          <Text fontWeight={'semibold'}>Member Since:</Text>
+          <Text fontWeight={"semibold"}>Member Since:</Text>
           <Text>{userInfo.memberSince}</Text>
           <Button
-            onClick={(e) => {
+            onClick={() => {
               signOutUser();
             }}
             colorScheme="yellow"
@@ -91,7 +84,7 @@ export default function UserInfo({ userID, email }) {
 
       <SelectAvatar
         isOpen={isOpen}
-        onClose={(e) => {
+        onClose={() => {
           onClose();
           getUserInfo();
         }}
