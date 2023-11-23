@@ -12,7 +12,7 @@ import {
   FormLabel,
   Input,
   Button,
-  Image, 
+  Image,
   SimpleGrid,
   Flex,
   Text
@@ -41,7 +41,7 @@ export default function SelectAvatar({ isOpen, onClose }) {
       }
     };
     fetchID();
-  }, []);
+  }, [userID]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +50,7 @@ export default function SelectAvatar({ isOpen, onClose }) {
       console.log(avatarList);
     };
     fetchData();
-  }, []);
+  }, [avatarList, listRef]);
 
   function setURL(url) {
     setPickedAvatar(url);
@@ -78,14 +78,15 @@ export default function SelectAvatar({ isOpen, onClose }) {
             {avatarList &&
               avatarList.map((avatar, index) => (
                 <Image
-                  key={avatar.Url} // Add a unique key for each image
-                  src={avatar.Url} // Assuming `url` is the property in your avatar data
+                  key={avatar.Url}
+                  src={avatar.Url}
+                  alt="" // <-- Add an empty string for decorative images
                   height={'200px'}
                   width={'200px'}
                   border={'black 3px solid'}
                   borderRadius={'15px'}
                   _hover={{ border: 'yellow 3px solid' }}
-                  onClick={() => setURL(avatar.Url)} // Use a function here
+                  onClick={() => setURL(avatar.Url)}
                 />
               ))}
           </SimpleGrid>
@@ -97,7 +98,7 @@ export default function SelectAvatar({ isOpen, onClose }) {
               <Text align={'center'} color={'red'} fontWeight={'bold'}>
                 You selected:
               </Text>
-              <Image src={pickedAvatar} width={'50px'} height={'50px'} />
+              <Image src={pickedAvatar} width={'50px'} height={'50px'} alt="" />
             </Flex>
           ) : null}
           <Button colorScheme="yellow" mr={3} onClick={() => { saveAvatar(); onClose(); }}>
