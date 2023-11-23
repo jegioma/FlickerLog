@@ -3,35 +3,36 @@ import React, { useState, useEffect, use } from 'react'; // Correct import state
 import {
   Box,
   SimpleGrid,
-  Grid,
-  GridItem,
   VStack,
-  HStack,
   Stack,
   Text,
   Heading,
   Image,
   Card,
-  IconButton,
   useDisclosure,
   Link,
   Flex,
   UnorderedList,
   ListItem,
-  Button
+  Button,
+  HStack,
+  Icon,
+
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon,DeleteIcon  } from '@chakra-ui/icons';
 import UserInfo from '@/components/userInfo';
 import CreateWatchList from '@/components/createWatchList';
 import { db, addDoc, collection, getDocs, auth, query, where,deleteDoc,doc } from '../configure/firebase.js';
+import { useRouter } from 'next/router.js';
 
-
-export const DisplayList = () => {
+export const DisplayList = ({email}) => {
   const [watchlists, setWatchlists] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [hoveredMovie, setHoveredMovie] = useState(null);
-  const [movieDetail, setMovieDetail] = useState([]);
-  const [listID, setListID] = useState('');
+  const router = useRouter();
+
+
+  // handle the mouse enter and leave event for the pop out movie detail
   const handleMouseEnter = (movieTitle) => {
     setHoveredMovie(movieTitle);
   };
@@ -43,18 +44,18 @@ export const DisplayList = () => {
 
 
 useEffect(() => {
-  console.log('1')
-
   getWatchInfo();
 }, []);
 
+
+// get the movie detail from database and store it into a array
 const getWatchInfo = async () => {
   try {
     const ListRef = collection(db, "WatchList");
     const q = query(ListRef, where("email", "==", auth?.currentUser?.email)); 
     const querySnapshot = await getDocs(q);
     const dataArray = [];
-
+    
     for (const doc of querySnapshot.docs) {
       const data = doc.data();
       const dataId = doc.id;
@@ -86,7 +87,7 @@ const getWatchInfo = async () => {
 };
 
 
-
+  // function to delete the watchlist from the database
   const deleteList = async (listID) => {
     try{
     await deleteDoc(doc(db, "WatchList", listID));
@@ -100,16 +101,31 @@ const getWatchInfo = async () => {
   }
 
 
+  // function to delete movie from the list when click trashcan icon
+  const deleteMovie = async (listID,movieID) => {
+    console.log('watch list',watchlists)
+    try{
+    await deleteDoc(doc(db, "WatchList", listID, "MovieDetail", movieID));
+
+      console.log("Movie successfully deleted!");
+      getWatchInfo();
+    } catch (error) {
+      console.log("Error deleting documents: ", error);
+    }
+  }
+
 return (
   <Box
-    border="black 3px solid"
+    border="white 3px solid"
     borderRadius={15}
     width="45rem"
-    backgroundColor="#d9d9d9"
+    background={'#e8e8e8'}
+    
+    
   >
     <VStack>
       <Heading color="#000">Your Watchlists</Heading>
-      <SimpleGrid columns={2} spacing={20} padding="2rem">
+      <SimpleGrid columns={2} spacing={18} padding="2rem">
         <Card
           border="solid black 3px"
           width={'280px'}
@@ -169,21 +185,36 @@ return (
                 <Text color={"Black"} fontWeight={"bold"}  align={'center'} fontSize={'1.2em'}>
                   {list.listName}
                 </Text>
-                <Button color='Black' backgroundColor={'white'} borderRadius={'5px'} _hover={{color:'red', backgroundColor:'grey'}} onClick={(e)=>{deleteList(list.id)}} >Remove List</Button>
+                
+                <Button color='Black' backgroundColor={'white'} borderRadius={'5px'} _hover={{color:'red', backgroundColor:'#fffc96'}} onClick={(e)=>{deleteList(list.id)}} height={'15px'} >Remove List</Button>
                 </Box>
                 <UnorderedList>
                 {list.movieDetail.map((movie, index) => (
-                  <ListItem key={movie.Title}>
+                  <ListItem key={movie.id}>
                   <div >
+                    <HStack justifyContent={'space-between'}>
                     <Link
-                      _hover={{ color: hoveredMovie === movie.Title ? "green" : "initial", backgroundColor: hoveredMovie === movie.Title ? "pink" : "initial", borderRadius: "5px"}}
-                      onMouseEnter={() => handleMouseEnter(movie.Title)}
+                      _hover={{ color: hoveredMovie === movie.id ? "green" : "initial", backgroundColor: hoveredMovie === movie.id ? "#fada91" : "initial", borderRadius: "5px"}}
+                      onMouseEnter={() => handleMouseEnter(movie.id)}
                       onMouseLeave={handleMouseLeave}
+                      onClick={(e) => {
+                        router.push({
+                          pathname: "/detailsPage", 
+                          query: {
+                            name: movie.Title || movie.Name, 
+                            id: movie.imbID, 
+                            type: movie.Type, 
+                          },
+                        });
+                      }
+                    }
                     >
                       {movie.Title}
                     </Link>
-                    
-                    {hoveredMovie === movie.Title && (
+                   
+                    <DeleteIcon height={'15px'} backgroundColor={'white'} onClick={(e)=>{deleteMovie(list.id,movie.id)}} _hover={{boxSize:'20px'}} marginRight={'10px'}/>
+                    </HStack>
+                    {hoveredMovie === movie.id && (
                       <Flex
                         border="solid black 3px"
                         p={2}
@@ -223,7 +254,7 @@ return (
         
       </SimpleGrid>
     </VStack>
-    <CreateWatchList isOpen={isOpen} onClose={(e)=>{onClose();getWatchInfo()}} />
+    <CreateWatchList isOpen={isOpen} onClose={(e)=>{onClose();getWatchInfo()}}  email ={email}/>
   </Box>
 );
 }

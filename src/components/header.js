@@ -1,18 +1,15 @@
 import {
-    Box, Heading, HStack, VStack, Image, Wrap, WrapItem, Button, Select, Flex, Center, Breadcrumb, BreadcrumbItem, BreadcrumbSeparator
+    Heading, HStack, Image, Button, Flex, Center, Breadcrumb, BreadcrumbItem, BreadcrumbSeparator
   } from '@chakra-ui/react'
-  import styles from '../styles/index.module.css'
-  import 'react-responsive-carousel/lib/styles/carousel.min.css';
-  import { Carousel } from 'react-responsive-carousel'
-  import { LazyLoadImage } from 'react-lazy-load-image-component';
-  import 'react-lazy-load-image-component/src/effects/blur.css'; // Import CSS for image effects
-  import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'; // Import Bootstrap components
-  import Link from 'next/link';
-  import { Router } from 'react-router-dom';
-  import { auth } from '../configure/firebase.js';
-  import { useState, useEffect } from 'react';
+import styles from '../styles/index.module.css'
+import Link from 'next/link';
+import { auth } from '../configure/firebase.js';
+import { useState, useEffect } from 'react';
+import { signOutUser } from '@/pages/api/accountApi';
+
 export default function Header() {
   const [user, setUser] = useState(""); // Initialize user state
+  const userLogin = auth.currentUser;
 
   // check if user is logged in, if not then route to login page instead of an empty profile page
   useEffect(() => {
@@ -24,7 +21,6 @@ export default function Header() {
                   setUser("");
               }
           })
-
       }
   checkLogin()
   }, []);
@@ -71,17 +67,20 @@ export default function Header() {
                 </BreadcrumbItem>
             </Breadcrumb>
 
-      <Button
-       as ={Link}
+    {userLogin ? (
+      <Button 
+        colorScheme='green'
+        onClick={() => signOutUser()}
+        as={Link}
         href='/login'
-      className="custom-button"
-      _hover={{
-        backgroundColor: '#153f00',
-        color: 'tomato',
-      }}
-    >
-      Log-in
-    </Button>
+      >Logout</Button>
+    ) : (
+      <Button 
+        colorScheme='green'
+        as={Link}
+        href='/login'
+      >Login</Button>
+    )}
   </HStack>
 </Flex>
     )

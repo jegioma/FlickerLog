@@ -1,6 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect } from "react";
 import {
-  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -8,68 +7,61 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  FormControl,
-  FormLabel,
-  Input,
   Button,
   Image,
   SimpleGrid,
   Flex,
-  Text
-} from '@chakra-ui/react';
+  Text,
+} from "@chakra-ui/react";
 
-import { db, collection, getDocs, auth, doc, where, query, updateDocRef } from '../configure/firebase.js';
+import {
+  db,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+} from "../configure/firebase.js";
 
-export default function SelectAvatar({ isOpen, onClose }) {
-  const listRef = collection(db, 'Avatar');
+export default function SelectAvatar({ isOpen, onClose, userID }) {
+  const listRef = collection(db, "Avatar");
   const [avatarList, setAvatarList] = useState([]);
-  const [pickedAvatar, setPickedAvatar] = useState('');
-  const [userID, setUserID] = useState('');
+  const [pickedAvatar, setPickedAvatar] = useState("");
 
-  useEffect(() => {
-    const fetchID = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        const email = currentUser.email;
-        console.log("email", email);
-        const q = query(collection(db, "Users"), where("email", "==", email));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc, index) => {
-          setUserID(doc.id);
-        });
-        console.log("userID", userID);
-      }
-    };
-    fetchID();
-  }, [userID]);
-
+  // get the avatar list from firebase
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDocs(listRef);
-      setAvatarList(data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id })));
-      console.log(avatarList);
+      setAvatarList(
+        data.docs.map((doc, index) => ({ ...doc.data(), id: doc.id }))
+      );
     };
     fetchData();
-  }, [avatarList, listRef]);
+  }, [listRef]);
 
+  // set the picked avatar url to the selected avatar
   function setURL(url) {
     setPickedAvatar(url);
   }
 
-  const saveAvatar = async () => {
-    const userRef = doc(db, 'Users', userID);
+  // close the modal and clean up the picked avatar
+  function closeWindow() {
+    onClose();
+    setPickedAvatar(null);
+  }
 
-    await updateDocRef(userRef, {
+  // save the avatar url to the user's profile
+  const saveAvatar = async () => {
+    const userRef = doc(db, "Users", userID);
+    await updateDoc(userRef, {
       Url: pickedAvatar,
     });
-
-    onClose(); // Close the modal
+    closeWindow(); // Close the modal
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={closeWindow}>
       <ModalOverlay />
-      <ModalContent backgroundColor={'white'} maxW="2xl">
+      <ModalContent backgroundColor={"white"} maxW="2xl">
         <ModalHeader>Select Your Avatar</ModalHeader>
 
         <ModalCloseButton />
@@ -81,11 +73,11 @@ export default function SelectAvatar({ isOpen, onClose }) {
                   key={avatar.Url}
                   src={avatar.Url}
                   alt="" // <-- Add an empty string for decorative images
-                  height={'200px'}
-                  width={'200px'}
-                  border={'black 3px solid'}
-                  borderRadius={'15px'}
-                  _hover={{ border: 'yellow 3px solid' }}
+                  height={"200px"}
+                  width={"200px"}
+                  border={"black 3px solid"}
+                  borderRadius={"15px"}
+                  _hover={{ border: "yellow 3px solid" }}
                   onClick={() => setURL(avatar.Url)}
                 />
               ))}
@@ -94,18 +86,36 @@ export default function SelectAvatar({ isOpen, onClose }) {
 
         <ModalFooter>
           {pickedAvatar ? (
+            // show a little message to indicate which avatar is selected
             <Flex>
-              <Text align={'center'} color={'red'} fontWeight={'bold'}>
+              <Text align={"center"} color={"red"} fontWeight={"bold"}>
                 You selected:
               </Text>
-              <Image src={pickedAvatar} width={'50px'} height={'50px'} alt="" />
+              <Image
+                src={pickedAvatar}
+                alt="Avatar"
+                width={"50px"}
+                height={"50px"}
+              />
             </Flex>
           ) : null}
-          <Button colorScheme="yellow" mr={3} onClick={() => { saveAvatar(); onClose(); }}>
+          <Button
+            colorScheme="yellow"
+            mr={3}
+            onClick={() => {
+              saveAvatar();
+              onClose();
+            }}
+          >
             Save
           </Button>
 
-          <Button onClick={onClose} colorScheme="yellow">
+          <Button
+            onClick={() => {
+              closeWindow();
+            }}
+            colorScheme="yellow"
+          >
             Cancel
           </Button>
         </ModalFooter>
