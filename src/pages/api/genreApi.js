@@ -1,39 +1,104 @@
-// const url = 'https://streaming-availability.p.rapidapi.com/genres';
-// const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en'
-// const motnOptions = {
-//     method: 'GET',
-//     headers: {
-//         'x-rapidapi-host': process.env.NEXT_PUBLIC_MOTN_RAPIDAPI_HOST,
-//         'x-rapidapi-key': process.env.NEXT_PUBLIC_X_RAPIDAPI_KEY
-//     }
-// };
+const omdbKey = process.env.NEXT_PUBLIC_OMDB_KEY;
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
+  }
+};
 
-// const tmdbOptions = {
-//     method: 'GET',
-//     headers: {
-//         accept: 'application/json',
-//         Authorization: process.env.NEXT_PUBLIC_TMDB_TOKEN
-//     }
-// }
-    
-// const fetchGenre = async () => {
-//     let genreResults = []; 
+export async function fetchTvToday() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/airing_today?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+export async function fetchTvOnAir() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/on_the_air?language=en-US&page=1'`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    } 
+}
+export async function fetchTvPopular() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/popular?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+export async function fetchTvTopRated() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
 
-//     await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', tmdbOptions)
-//       .then(response => response.json())
-//       .then(data => {
-//         if (data && data.genres) { // check if data and data.genres exist
-//           genreResults = data.genres.map(genre => {
-//             return {
-//               genreId: genre.id,
-//               genreName: genre.name
-//             };
-//           });
-//         }
-//       })
-//       .catch(err => console.error(err));
+export async function fetchMovieNowPlaying() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`, options)
+        const data = await response.json(); 
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+export async function fetchMoviePopular() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+export async function fetchMovieTopRated() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
+export async function fetchMovieUpcoming() {
+    try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`, options)
+        const data = await response.json();
+        return data;
+    } catch(error) {
+        console.log(error);
+    }
+}
 
-//     return genreResults;
-// };
-
-// export default fetchGenre;
+export async function getGenres() {
+    try {
+        const genreMap = new Map();
+        fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
+            .then((response) => response.json())
+            .then((data) => {
+                const movieGenres = data.genres;
+                fetch('https://api.themoviedb.org/3/genre/tv/list?language=en', options)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const combineGenres = [...movieGenres, ...data.genres];
+                        combineGenres.forEach((genre) => {
+                            genreMap.set(genre.id, genre.name);
+                        });
+                    });
+            }); 
+            return genreMap;
+    } catch (error) {
+        console.log(error);
+    }
+}
