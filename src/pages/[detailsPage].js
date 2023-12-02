@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 export default function DetailsPage() {
     const router = useRouter();
     const { id, type } = router.query;
-    const [ genreString, setGenreString ] = useState(''); // Get the genre string, or use an empty string if it's undefined
+    const [ genreString, setGenreString ] = useState('');
     const [ genreNames, setGenreNames ] = useState([]);
     const [ list, setList ] = useState([]);
     const [ movieLayout, setMovieLayout ] = useState(false);
@@ -45,7 +45,6 @@ export default function DetailsPage() {
                     fetchRatings(movieData?.imdb_id)
                         .then((ratingData) => {
                             setRatings(ratingData);
-                            console.log(ratingData)
                             setGenreString(ratingData.Genre);
                         }).catch((error) => {
                             console.log(error);
@@ -59,7 +58,6 @@ export default function DetailsPage() {
                 .then((tvData) => {
                     setRatings(tvData);
                     setGenreString(tvData?.Genre);
-                    console.log(results)
                 }).catch((error) => {
                 console.log(error);
             });

@@ -6,7 +6,7 @@ export default function Footer() {
   const forestGreen = "#228B22"; // Forest Green color
 
   return (
-    <Box textAlign="center" mt={4} mb={4} bg="black" p={4} color="white">
+    <Box textAlign="center"  bg="black" p='10px 50px' color="white">
       <Flex justify="space-between">
         {/* First Column */}
         <Box>
@@ -69,7 +69,7 @@ export default function Footer() {
           <div>
             <Link href="/jeancarlo" passHref>
               <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
-                JeanCarlo
+                Jeancarlo
               </div>
             </Link>
           </div>
@@ -123,16 +123,9 @@ export default function Footer() {
             Powered By
           </Text>
           <div>
-            <Link href="https://nodejs.org/en" passHref>
-              <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
-                Node.JS
-              </div>
-            </Link>
-          </div>
-          <div>
             <Link href="https://react.dev/" passHref>
               <div style={{ display: "block", marginBottom: "2px", color: "#2E8B57" }}>
-                React
+                NextJS
               </div>
             </Link>
           </div>
@@ -151,26 +144,24 @@ export default function Footer() {
             </Link>
           </div>
           <div>
-            <Link href="https://code.visualstudio.com/Docs/languages/javascript" passHref>
+            <Link href="https://developer.themoviedb.org/docs" passHref>
               <div style={{ display: "block", color: "#2E8B57" }}>
-                JavaScript
+                TMDB API
               </div>
             </Link>
           </div>
           <div>
-            <Link href="https://developer.themoviedb.org/docs" passHref>
+            <Link href="http://www.omdbapi.com" passHref>
               <div style={{ display: "block", color: "#2E8B57" }}>
-                TMDB api
+                OMDB API
               </div>
             </Link>
           </div>
         </Box>
 
         {/* Fifth Column */}
-        <Box>
-          {/* Center the header text */}
+        {/* <Box>
           <VStack spacing={2} align="center">
-            {/* Display the image from Firebase Storage */}
             <Image
               src="https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Attrition%2FAttritionLogo.PNG?alt=media&token=d506776a-038b-4ad7-81e3-fe9b67825001"
               alt="Attrition Logo"
@@ -178,34 +169,13 @@ export default function Footer() {
               maxW="65%" // Set the maximum width to 80% of its container
             />
           </VStack>
-        </Box>
+        </Box> */}
       </Flex>
 
       {/* Divider between columns and "Copyright Text" */}
       <Divider my={4} borderColor="#2E8B57" />
 
-      {/* Copyright Text */}
-      <Center>
-        <HStack>
-          <Link href="/terms" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Terms
-            </Text>
-          </Link>
-          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
-          <Link href="/privacy" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Privacy
-            </Text>
-          </Link>
-          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
-          <Link href="/contact-us" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Contact Us
-            </Text>
-          </Link>
-        </HStack>
-      </Center>
+    
 
       {/* Popover for the "Settings" link */}
     </Box>
