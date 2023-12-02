@@ -1,7 +1,6 @@
 // pages/AboutUs.js
 import React from 'react';
 import { Text, Box } from '@chakra-ui/react';
-import Footer from '../components/footer'; // Adjust the import path based on your project structure
 
 const AboutUs = () => {
   const timesNewRoman = 'Times New Roman, serif';
@@ -19,7 +18,6 @@ const AboutUs = () => {
           Feel free to learn more about each team member and our project. If you have any questions or suggestions, you can contact us through the provided links.
         </Text>
       </div>
-      <Footer />
     </Box>
   );
 };
