@@ -202,7 +202,7 @@ return (
                           pathname: "/detailsPage", 
                           query: {
                             name: movie.Title || movie.Name, 
-                            id: movie.imbID, 
+                            id: movie.imdbID, 
                             type: movie.Type, 
                           },
                         });
