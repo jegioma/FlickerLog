@@ -6,6 +6,7 @@ export default function Footer() {
   const forestGreen = "#228B22"; // Forest Green color
 
   return (
+
     <Box textAlign="center"  bg="black" p='10px 50px' color="white">
       <Flex justify="space-between">
         {/* First Column */}
@@ -174,11 +175,8 @@ export default function Footer() {
 
       {/* Divider between columns and "Copyright Text" */}
       <Divider my={4} borderColor="#2E8B57" />
-      
+            
+    </Box> 
 
-    
-
-      {/* Popover for the "Settings" link */}
-    </Box>
   );
 }
