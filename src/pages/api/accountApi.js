@@ -19,36 +19,36 @@ export async function getLists() {
     return dataArray;
 }
 //add item to the selected watchlist and check for duplicates
-export async function addItemToList(resultDetails, item) {
+export async function addItemToList(ratings, item) {
     try {
         const watchlistRef = doc(db, 'WatchList', item.id);
         const movieDetailCollectionRef = collection(watchlistRef, 'MovieDetail');
 
-        const duplicateQuery = query(movieDetailCollectionRef, where('imdbID', '==', resultDetails?.imdbID));
+        const duplicateQuery = query(movieDetailCollectionRef, where('imdbID', '==', ratings?.imdbID));
         const duplicateSnapshot = await getDocs(duplicateQuery);
         
         if (duplicateSnapshot.docs.length === 0) {
             await addDoc(movieDetailCollectionRef, {
-                Title: resultDetails?.Title,
-                image: resultDetails?.Poster,
-                imdbID: resultDetails?.imdbID,
-                Type: resultDetails?.Type,
+                Title: ratings?.Title,
+                image: ratings?.Poster,
+                imdbID: ratings?.imdbID,
+                Type: ratings?.Type,
             });
             return {
                 success: true,
-                message: `Added "${resultDetails?.Title}" to your ${item.listName}-WatchList`,
+                message: `Added "${ratings?.Title}" to your ${item.listName}-WatchList`,
             };
         } else {
             return {
                 success: false,
-                message: `"${resultDetails?.Title}" is already in your ${item.listName}-WatchList`,
+                message: `"${ratings?.Title}" is already in your ${item.listName}-WatchList`,
             };
         }
     } catch (error) {
         console.log(error);
         return {
             success: false,
-            message: `Failed to add "${resultDetails?.Title}" to your ${item.listName}-WatchList`,
+            message: `Failed to add "${ratings?.Title}" to your ${item.listName}-WatchList`,
         };    
     }
 }

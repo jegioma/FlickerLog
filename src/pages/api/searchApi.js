@@ -7,22 +7,10 @@ const options = {
   }
 };
 
-export async function fetchMovieDetails(movie) {
-  try {
-    const response = await fetch(`https://www.omdbapi.com/?t=${movie}&type=movie&apikey=${omdbKey}`);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
-export async function fetchMovieDeets(id) {
+export async function fetchMovieDetails(id) {
   try {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, options);
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -30,9 +18,23 @@ export async function fetchMovieDeets(id) {
   }
 }
 
-export async function fetchShowDetails(tv) {
+export async function fetchRatings(ttid) {
   try {
-    const response = await fetch(`https://www.omdbapi.com/?t=${tv}&type=series&apikey=${omdbKey}`);
+    const response = await fetch(`https://www.omdbapi.com/?i=${ttid}&apikey=${omdbKey}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function fetchShowDetails(id) {
+  try {
+    const fetchId = await fetch(`https://api.themoviedb.org/3/tv/${id}/external_ids`, options);
+    const idData = await fetchId.json();
+    const ttid = idData?.imdb_id;
+
+    const response = await fetch(`https://www.omdbapi.com/?i=${ttid}&apikey=${omdbKey}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -40,35 +42,6 @@ export async function fetchShowDetails(tv) {
     throw error;
   }
 }
-
-// export async function fetchMovieDetails(movie, id) {
-//     try {
-//     //   const response = await fetch(`https://api.themoviedb.org/3/${movie}/${id}?language=en-US'`, options);
-//     //   const data = await response.json();
-//     fetch(`https://api.themoviedb.org/3/${movie}/${id}?language=en-US'`, options)
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data);
-//         })
-//       console.log(data); // Optional: you can remove this line
-//       return data;
-//     } catch (error) {
-//       console.log(error);
-//       throw error;
-//     }
-//   }
-  
-//   export async function fetchShowDetails(tv, id) {
-//     try {
-//         const response = await fetch(`https://api.themoviedb.org/3/${tv}/${id}?language=en-US'`, options);
-//         const data = await response.json();
-//       console.log(data); // Optional: you can remove this line
-//       return data;
-//     } catch (error) {
-//       console.log(error);
-//       throw error;
-//     }
-//   }
 
 export function formatDate(dateString) {
     let date = dateString.split('-'); //split dateSting by '-' into array
@@ -97,6 +70,15 @@ export function formatDateString(dateString) {
 }
 
 export function formatGenreString(genreString) {
+  console.log(genreString)
+  if (!genreString) {
+    return null
+  } else {
     return genreString.split(',').map((genre) => genre.trim());
   }
+}
+
+export function formatNumberWithCommas(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
   
