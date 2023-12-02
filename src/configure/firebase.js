@@ -1,11 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getAuth} from 'firebase/auth';
-import {getFirestore, collection as collectionRef, addDoc as addDocRef, getDocs as docs, getDoc, where as wheres ,query as querys, doc as docc, updateDoc, deleteDoc as deleteDocRef
-        , or as orRef
+import { getAuth, signOut as signOutRef } from 'firebase/auth';
+import {
+  getFirestore,
+  collection as collectionRef,
+  addDoc as addDocRef,
+  getDocs as getDocsRef,
+  getDoc as getDocRef,
+  where as whereRef,
+  query as queryRef,
+  doc as docRef,
+  updateDoc as updateDocRef,
+  deleteDoc as deleteDocRef,
+  or as orRef,
 } from 'firebase/firestore';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -20,21 +28,20 @@ const firebaseConfig = {
   measurementId: "G-JBHQJ7W5D5"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-
-
-
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const  collection = collectionRef
-export const addDoc = addDocRef
-export const getDocs = docs
-export const where = wheres
-export const query = querys
-export const doc = docc
-export const updateDocRef = updateDoc
-export const deleteDoc = deleteDocRef
-export const or = orRef
+export const collection = collectionRef;
+export const addDoc = addDocRef;
+export const getDocs = getDocsRef;
+export const where = whereRef;
+export const query = queryRef;
+export const doc = docRef;
+export const getDoc = getDocRef;
+export const updateDoc = updateDocRef;
+export const deleteDoc = deleteDocRef;
+export const or = orRef;
+
+// Export the signOut function
+export const signOut = signOutRef;

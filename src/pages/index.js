@@ -130,7 +130,7 @@ export default function Index() {
     'tt1745960',
     'tt5433140',
     'tt15398776',
-    'tt14986406'
+    'tt12343534'
   ];
   const imdbIds2 = [
     'tt8005118',
@@ -150,29 +150,29 @@ export default function Index() {
   ];
 
   const images1 = [
-    'https://img.omdbapi.com/?i=tt3291150&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=tt0439572&h=600&apikey=9dce2383',
-    '/maverick.jpg',
-    'https://img.omdbapi.com/?i=tt5433140&h=600&apikey=9dce2383',
-    'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg',
-    '/bleach.jpg'
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2Fdownload.jpg?alt=media&token=80ed5e18-c304-41f7-aded-b0aca9531e67&_gl=1*2ccg42*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1Njg2NS4yNi4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2Fdownload%20(1).jpg?alt=media&token=5c8d4164-ddbd-4579-8e9e-6206c73594ef&_gl=1*1gk28m9*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1Njk4OC41OC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2Fdownload%20(2).jpg?alt=media&token=c8098756-dd1c-4a38-848d-6fbe4eb8721c&_gl=1*lbgmdm*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzAwNi40MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2Fdownload%20(3).jpg?alt=media&token=10ecc42b-0256-4eb9-8991-e43c73298195&_gl=1*j5oh2w*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzA0Ni42MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2FMV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY%40._V1_SX300.jpg?alt=media&token=be07007f-e82c-4454-848b-a4c128d22c68&_gl=1*rwwmgq*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzA3Mi4zNC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel1%2F818DUzqnwES._AC_SL1500_.jpg?alt=media&token=c6d27507-8b1b-47ba-9e82-863686b38097&_gl=1*1bujrch*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzEyNy42MC4wLjA.'
   ];
   const images2 = [
-    'https://img.omdbapi.com/?i=tt8005118&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=tt1981558&h=600&apikey=9dce2383',
-    '/office.jpeg',
-    'https://img.omdbapi.com/?i=tt14209916&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=tt6791350&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=tt2861424&h=600&apikey=9dce2383',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload%20(4).jpg?alt=media&token=edc4e12d-fe1a-48a8-9241-03acefe04656&_gl=1*9me9xc*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzE5Mi41Ni4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload.jpg?alt=media&token=993d161b-3029-438c-99bb-fe2da5a12cb1&_gl=1*ut4fgy*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzIwOS4zOS4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload%20(1).jpg?alt=media&token=a15270ce-8963-4a30-9c96-477d49c2716f&_gl=1*amjaqq*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzIzMy4xNS4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload%20(2).jpg?alt=media&token=375f235a-5a27-469c-a571-cf7be76082f5&_gl=1*1b5dars*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzI2MC42MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload%20(3).jpg?alt=media&token=ce689122-4134-42db-9de9-a90048d6cf8c&_gl=1*o605ty*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzI4MC40MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel2%2Fdownload%20(5).jpg?alt=media&token=05497db5-c8e5-4ab4-a902-2b2793d4f5ac&_gl=1*rpojnk*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzMwMy4xNy4wLjA.',
 
   ];
   const images3 = [
-    '/parasite.jpg',
-    'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_SX300.jpg',
-    'https://m.media-amazon.com/images/M/MV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg',
-    'https://img.omdbapi.com/?i=tt9764362&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=tt13833688&h=600&apikey=9dce2383',
-    'https://img.omdbapi.com/?i=/tt3704428&h=600&apikey=9dce2383'
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2Fdownload%20(6).jpg?alt=media&token=bf03036c-4695-451d-80b8-ec0df4a2959d&_gl=1*184ljh2*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzQyMi41Ni4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2FMV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA%40._V1_SX300.jpg?alt=media&token=70c8ab33-3e40-4bbe-baba-aa98434c060f&_gl=1*mrwwpc*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzQ3Ni4yLjAuMA..',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2FMV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg?alt=media&token=095c4d6c-486e-481a-88ec-60d5360e13d9&_gl=1*1k28ai8*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzQ5MS42MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2Fdownload.jpg?alt=media&token=5ef1e957-9d9c-4b82-8db5-6d38dc7eb60c&_gl=1*10lmmiq*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzUyOS4yMi4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2Fdownload%20(1).jpg?alt=media&token=f59d33e9-114e-4ad7-b639-340272c5e993&_gl=1*11g9ry4*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzU0Ny40LjAuMA..',
+    'https://firebasestorage.googleapis.com/v0/b/flicklog-980df.appspot.com/o/Carousel3%2Fdownload%20(2).jpg?alt=media&token=2f65da58-bb4d-4854-aba9-e146be5247f0&_gl=1*3on7ig*_ga*NjQzNzkyNjQ1LjE2OTcwNzI3ODU.*_ga_CW55HF8NVT*MTY5NzY1NDI3My41LjEuMTY5NzY1NzU2Ny41OS4wLjA.'
   ];
 
   return (
