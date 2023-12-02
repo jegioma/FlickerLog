@@ -6,7 +6,9 @@ export default function Footer() {
   const forestGreen = "#228B22"; // Forest Green color
 
   return (
+    
     <Box textAlign="center" mt={4} mb={4} bg="black" p={4} color="white">
+      <Divider my={4} borderColor="#2E8B57" />
       <Flex justify="space-between">
         {/* First Column */}
         <Box>
@@ -14,11 +16,11 @@ export default function Footer() {
             FlickerLog
           </Text>
           <div>
-            <Link href="/home" passHref>
-              <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
-                Home
-              </div>
-            </Link>
+          <Link href="/home" passHref>
+            <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
+             Home
+            </div>
+          </Link>
           </div>
           <div>
             <Link href="/aboutus" passHref>
@@ -183,31 +185,9 @@ export default function Footer() {
 
       {/* Divider between columns and "Copyright Text" */}
       <Divider my={4} borderColor="#2E8B57" />
+      
 
-      {/* Copyright Text */}
-      <Center>
-        <HStack>
-          <Link href="/terms" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Terms
-            </Text>
-          </Link>
-          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
-          <Link href="/privacy" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Privacy
-            </Text>
-          </Link>
-          <Divider orientation="vertical" mx={2} borderColor="#2E8B57" />
-          <Link href="/contact-us" passHref>
-            <Text as="span" style={{ color: "#2E8B57" }}>
-              Contact Us
-            </Text>
-          </Link>
-        </HStack>
-      </Center>
-
-      {/* Popover for the "Settings" link */}
-    </Box>
+      
+    </Box> 
   );
 }
