@@ -6,6 +6,7 @@ export default function Footer() {
   const forestGreen = "#228B22"; // Forest Green color
 
   return (
+
     <Box textAlign="center"  bg="black" p='10px 50px' color="white">
       <Flex justify="space-between">
         {/* First Column */}
@@ -14,11 +15,11 @@ export default function Footer() {
             FlickerLog
           </Text>
           <div>
-            <Link href="/home" passHref>
-              <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
-                Home
-              </div>
-            </Link>
+          <Link href="/home" passHref>
+            <div style={{ display: 'block', marginBottom: '2px', color: '#2E8B57' }}>
+             Home
+            </div>
+          </Link>
           </div>
           <div>
             <Link href="/aboutus" passHref>
@@ -174,10 +175,8 @@ export default function Footer() {
 
       {/* Divider between columns and "Copyright Text" */}
       <Divider my={4} borderColor="#2E8B57" />
+            
+    </Box> 
 
-    
-
-      {/* Popover for the "Settings" link */}
-    </Box>
   );
 }
