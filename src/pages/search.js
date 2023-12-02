@@ -139,22 +139,26 @@ export default function Search() {
       </VStack>
       <Center padding='3rem'>
         <VStack width='80rem'>
-            <SimpleGrid columns={2} gap={10}>
-            {
-                searchResults.length > 0 && searchResults
-                .filter((result) => result && result.media_type !== "person")
-                .map(results => (
-                    results && genreMap && <MemoCard
-                        key={results.id}
-                        width='100%'
-                        padding={1}
-                        margin={0}
-                    >
-                        <ResultItem results={results} genreMap={genreMap}/>
-                    </MemoCard>
-                ))
-            } 
-            </SimpleGrid>
+        <SimpleGrid columns={2} gap={10}>
+          {searchResults &&
+             searchResults.length > 0 &&
+             searchResults
+             .filter((result) => result && result.media_type !== "person")
+             .map((results) => (
+             results &&
+            genreMap && (
+          <MemoCard
+            key={results.id}
+            width="100%"
+            padding={1}
+            margin={0}
+          >
+            <ResultItem results={results} genreMap={genreMap} />
+          </MemoCard>
+            )
+          ))}
+        </SimpleGrid>
+
             {showButtons && (
               <HStack marginTop='2rem' spacing={10}>
                 <Button colorScheme='yellow' size='lg' onClick={() => handlePageChange(currentPage - 1)}>Prev</Button>
