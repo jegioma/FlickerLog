@@ -2,8 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['m.media-amazon.com'],
-  }
-}
-
-module.exports = nextConfig
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        pathname: '**',
+      },
+    ],
+  },
+ }
+ 
+ module.exports = nextConfig 

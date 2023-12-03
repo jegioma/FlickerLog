@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'; // <-- Include useMemo
 import axios from 'axios';
-import { Box, Heading, Flex, Text, HStack } from '@chakra-ui/react';
-import styles from '../styles/index.module.css';
+import { Box, Heading, Flex, Text, HStack, Container, VStack, Divider } from '@chakra-ui/react';
+import Image from 'next/image';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -187,13 +187,14 @@ export default function Index() {
   }, [imdbIds1, imdbIds2, imdbIds3]);
 
   return (
-    <>
-      <Heading fontSize="5xl" color="#f2f2f2" marginTop="3rem" textAlign="center">
-        🎥 Your Ultimate Movies and TV Show Hub 📺
-      </Heading>
 
-      <Box className={styles.body} margin={0} padding={0} marginTop="1rem">
-
+      <Box margin={0} padding={0} marginTop="1rem">
+        <Heading fontSize="5xl" color="#f2f2f2" marginTop="3rem" textAlign="center">
+          🎥 Your Ultimate Movies and TV Show Hub 📺
+        </Heading>
+        <Heading fontSize="2xl" color="#f2f2f2" textAlign="center" marginTop="2rem" marginBottom='3rem'>
+          ⭐️ Discover, Watch, and Discuss Your Favorite Movies and TV Shows ⭐️
+        </Heading>
         <Flex justifyContent="center">
           <HStack spacing="2rem">
             
@@ -243,11 +244,57 @@ export default function Index() {
             </Flex>
           </HStack>
         </Flex>
+        <VStack>
 
-        <Heading fontSize="2xl" color="#f2f2f2" textAlign="center" marginTop="2rem">
-          ⭐️ Discover, Watch, and Discuss Your Favorite Movies and TV Shows ⭐️
-        </Heading>
+          <HStack width='90vw' gap={10} marginTop='10rem'>
+            <Image
+              src='/search.png'
+              width={600}
+              height={600}
+              alt='Search Page Image'
+            />
+            <Container>
+              <Heading fontSize='4xl' textAlign='start' color='#fffeee'>
+                Search though thousands of movies and tv-shows. Stay up-to-date with what&apos;s new 
+              </Heading>
+            </Container>
+          </HStack>
+
+          <Divider marginTop='10rem' borderWidth={5} width='90%'/>
+
+          <HStack width='90vw' gap={10} marginTop='10rem'>
+            <Container>
+              <Heading fontSize='4xl' textAlign='start' color='#fffeee'>
+                See all the information of your search and add them to your WatchLists
+              </Heading>
+            </Container>
+            <Image
+              src='/details.png'
+              width={600}
+              height={600}
+              alt='Details Page Image'
+            />
+          </HStack>
+
+          <Divider marginTop='10rem' borderWidth={5} width='90%'/>
+
+          <HStack width='90vw' gap={10} marginTop='10rem' marginBottom='5rem'>
+            <Image
+              src='/profile.png'
+              width={600}
+              height={600}
+              alt='Profile Page Image'
+            />
+            <Container>
+              <Heading fontSize='4xl' textAlign='start' color='#fffeee' marginBottom={3}>
+                Create and manage all of your WatchLists. 
+              </Heading>
+              <Heading fontSize='4xl' textAlign='start' color='#fffeee' marginTop={3}>
+                Find and follow your friends so you can view each other&apos;s WatchLists.
+              </Heading>
+            </Container>
+          </HStack>
+        </VStack>
       </Box>
-    </>
   );
 }

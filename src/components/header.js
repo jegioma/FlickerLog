@@ -1,7 +1,6 @@
 import {
     Heading, HStack, Image, Button, Flex, Center, Breadcrumb, BreadcrumbItem, BreadcrumbSeparator
 } from '@chakra-ui/react'
-import styles from '../styles/index.module.css'
 import Link from 'next/link';
 import { auth } from '../configure/firebase.js';
 import { useState, useEffect } from 'react';
@@ -35,7 +34,7 @@ export default function Header() {
             height={75}
             bg='#16110E'
           />
-          <Heading className={styles.title} fontSize="5xl" color="green.500">FlickerLog</Heading>
+          <Heading fontSize="5xl" color="green.500">FlickerLog</Heading>
         </Center>
     <HStack spacing="1rem">
       <Breadcrumb fontSize='xl'>

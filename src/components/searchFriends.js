@@ -87,14 +87,17 @@ export default function SearchFriend({ isOpen, onClose }) {
 
   useEffect(() => {
     const fetchID = async () => {
-      const q = query(collection(db, "Users"), where("email", "==", email));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc, index) => {
-        setUserID(doc.id);
-      });
+      if (email) {
+        const q = query(collection(db, "Users"), where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc, index) => {
+          setUserID(doc.id);
+        });
+      }
     };
     fetchID();
-  }, [email]);
+   }, [email]);
+   
 
   useEffect(() => {
     const validateResult = async () => {
