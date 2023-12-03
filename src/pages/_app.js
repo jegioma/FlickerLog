@@ -9,10 +9,12 @@ export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <Box as='main' minHeight='100vh' minWidth='100wh'>
+      <Box as='main' minHeight='100vh' display='flex' flexDirection='column'>
         <Header /> 
-        <Component {...pageProps} />
-        <Footer/>
+        <Box flexGrow={1}>
+          <Component {...pageProps} />
+       </Box>
+       <Footer/>
       </Box>
     </ChakraProvider>
   )

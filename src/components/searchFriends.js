@@ -178,6 +178,7 @@ export default function SearchFriend({ isOpen, onClose }) {
                     key={friend.Url}
                     src={friend.Url}
                     boxSize={"100%"}
+                    width={100}
                     border={" 3px solid"}
                     _hover={{ border: "yellow 3px solid" }}
                     borderRadius={"full"}
