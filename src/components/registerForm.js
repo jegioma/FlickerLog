@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
- 
+
 import {
   Box,
   Input,
@@ -9,16 +9,16 @@ import {
   InputGroup,
   InputRightElement,
 } from '@chakra-ui/react';
- 
+
 import {db, addDoc, collection,getDocs,auth,where,query} from '../configure/firebase.js';
 import { createUserWithEmailAndPassword} from 'firebase/auth';
- 
+
 import ShowAlert from './alert.js';
 import validator from 'validator';
- 
+
 //components for the Register
 export const RegisterForm = () => {
- 
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword]= useState('');
@@ -26,16 +26,16 @@ export const RegisterForm = () => {
     const [vertifyPassword, setVertifyPassword] = useState(false);
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString(); // Format as a string: "MM/DD/YYYY"
- 
+
     const [showGoodAlert, setShowgoodAlert] = useState('no');
     const [showBadAlert, setShowBadAlert] = useState('no');
     const [errorMessage, setErrorMessage] = useState('');
     const [allName, setAllName] = useState([]);
- 
+
     // define the collection from firebase
     const userRef = collection(db, "Users");
-   
- 
+    
+
     // Create authentication user with email and password
     const Register = async () => {
      try{
@@ -50,12 +50,12 @@ export const RegisterForm = () => {
      }
     }
    
- 
+
     // Save user information to firebase firestore
     const saveUser = async () => {
- 
+  
      try{
-        await addDoc(userRef,
+        await addDoc(userRef, 
           {
             userName: userName.toLowerCase(),
             email: email.toLowerCase(),
@@ -65,11 +65,11 @@ export const RegisterForm = () => {
          
      }catch(error){
        console.log(error);
-     
+      
      }
   }
- 
- 
+
+
     // Check if password and confirm password match
     useEffect(() => {
       async function checkPassword() {
@@ -78,13 +78,13 @@ export const RegisterForm = () => {
          
         } else {
           setVertifyPassword(true);
- 
+
         }
       }
-     
+      
       checkPassword();
     }, [password, confirmPassword]);
-   
+    
     function ValidateEmail(email) {
       if (validator.isEmail(email)) {
         return true;
@@ -92,80 +92,81 @@ export const RegisterForm = () => {
         return false;
       }
     }
- 
+
     const getUserNames = async () => {
-     
+      
       // setup query to get specific user info
       try {
-     
+      
         const q = query(userRef, where("userName", "==",userName.toLowerCase()));
         const querySnapshot = await getDocs(q);
         const dataArray = [];
         // get the data array from the querySnapshot only
         querySnapshot.docs.map((doc) => {
-         
+          
           const data = doc.data();
           dataArray.push(data);
  
         });
         setAllName(dataArray); // assign the data to a usestate
+        console.log
       } catch (error) {
         console.log("Error getting documents: ", error);
       }
    
     }
- 
+
   function checkUserName(){
-   
+    
  
     getUserNames()
- 
+    console.log('all name',allName);
     if (allName.length === 0){
-      console.log(allName);
+    
       console.log('empty');
         return true;
     }
    
       return false;
   }
-   
- 
+    
+
     return (
       <Box>
         {showGoodAlert ==='yes'? ShowAlert('success', 'Success!', 'You successfully register'): null}
         {showBadAlert==='yes' ? ShowAlert('error', 'Failed!', errorMessage):null}
- 
+
         <form>
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input type='email' placeholder='Enter your email' textAlign={'left'}
               onChange={(e) => {setEmail(e.target.value)}} />
           </FormControl>
- 
+  
           <FormControl>
             <FormLabel>Password</FormLabel>
             <InputGroup>
-            <Input type='text' placeholder='Enter your password'
+            <Input type='text' placeholder='Enter your password' 
             onChange={(e) => {setPassword(e.target.value)}}/>
- 
+  
             <InputRightElement>
             </InputRightElement>
             </InputGroup>
           </FormControl>
- 
+  
           <FormControl>
             <FormLabel>Confirm Password</FormLabel>
-            <Input type='text' placeholder='Confirm your password'
+            <Input type='text' placeholder='Confirm your password' 
             onChange = {(e) => {setConfirmPassword(e.target.value)}}
             />
           </FormControl>
- 
+  
           <FormControl>
             <FormLabel>User Name</FormLabel>
             <Input type='text' placeholder='Enter your user name'
             onChange={(e) => {setUserName(e.target.value)}} />
           </FormControl>
-         
+          
           <Button
             width={'full'}
             mt={4}
@@ -176,7 +177,7 @@ export const RegisterForm = () => {
                 setShowBadAlert('yes');
                 setErrorMessage('Please enter a valid email address');
               }
- 
+
               else if (checkUserName()===false){
                 setShowgoodAlert('no');
                 setShowBadAlert('yes');
@@ -184,15 +185,15 @@ export const RegisterForm = () => {
               }
                // Call checkPassword function
               else if (vertifyPassword) {
-                Register();
+                Register(); 
                 saveUser()
                 if (showGoodAlert ==='yes'){
                 saveUser()// Call Register function if vertifyPassword is true
                 setShowgoodAlert('yes');
                 setShowBadAlert('no');
                 };
-               
-               
+                
+                
               } else {
                setShowgoodAlert('no');
                setShowBadAlert('yes');
@@ -202,7 +203,7 @@ export const RegisterForm = () => {
           >
             Sign up
           </Button>
- 
+  
         </form>
       </Box>
     );
