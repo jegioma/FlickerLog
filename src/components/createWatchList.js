@@ -18,10 +18,10 @@ import {db, addDoc, collection,getDocs,auth} from '../configure/firebase.js';
 
 
 
-export default function CreateWatchList({ isOpen, onClose }) {
+export default function CreateWatchList({ isOpen, onClose,email }) {
     const [listName, setListName] = useState('');
     const listRef = collection(db, "WatchList");
-    const email = auth?.currentUser?.email;
+   
 
 
   // Save list information to firebase firestore
@@ -69,11 +69,11 @@ export default function CreateWatchList({ isOpen, onClose }) {
         </ModalBody>
 
         <ModalFooter>
+          <Button onClick={onClose}>
+            Cancel
+          </Button>
           <Button colorScheme='yellow' mr={3} onClick={() => {saveList(); onClose()}}>
             Save
-          </Button>
-          <Button onClick={onClose} colorScheme='yellow'>
-            Cancel
           </Button>
         </ModalFooter>
       </ModalContent>
