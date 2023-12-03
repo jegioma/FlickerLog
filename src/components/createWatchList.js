@@ -69,11 +69,11 @@ export default function CreateWatchList({ isOpen, onClose,email }) {
         </ModalBody>
 
         <ModalFooter>
+          <Button onClick={onClose}>
+            Cancel
+          </Button>
           <Button colorScheme='yellow' mr={3} onClick={() => {saveList(); onClose()}}>
             Save
-          </Button>
-          <Button onClick={onClose} colorScheme='yellow'>
-            Cancel
           </Button>
         </ModalFooter>
       </ModalContent>

@@ -48,7 +48,22 @@ export default function UserInfo({ userID, email }) {
     signOut(auth);
     router.push("/login");
   }
+  const getUserInfo = async () => {
+    // setup query to get specific user info
+    try {
+      const UserRef = collection(db, "Users");
+      const q = query(UserRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
 
+      // get the data array from the querySnapshot only
+      querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        setUserInfo(data); // assign the data to a usestate
+      });
+    } catch (error) {
+      console.log("Error getting documents: ", error);
+    }
+  };
   return (
     <GridItem height="100%">
       <Box
@@ -64,11 +79,11 @@ export default function UserInfo({ userID, email }) {
           <Image
             borderRadius="full"
             src={userInfo.Url ? userInfo.Url : "/alien.png"}
-            border="dashed cyan 5px"
+            border='solid 3px black'
             alt="avatar image"
             boxSize="150px"
           />
-          <Button onClick={onOpen}>Edit Avatar</Button>
+          <Button colorScheme="green" size='xs' onClick={onOpen}>Edit Avatar</Button>
           <Text fontWeight={"semibold"}>Member Since:</Text>
           <Text>{userInfo.memberSince}</Text>
           <Button
@@ -77,7 +92,7 @@ export default function UserInfo({ userID, email }) {
             }}
             colorScheme="yellow"
           >
-            Log Out
+            Logout
           </Button>
         </VStack>
       </Box>

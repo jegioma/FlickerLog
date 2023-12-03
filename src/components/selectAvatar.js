@@ -100,6 +100,13 @@ export default function SelectAvatar({ isOpen, onClose, userID }) {
             </Flex>
           ) : null}
           <Button
+            onClick={() => {
+              closeWindow();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
             colorScheme="yellow"
             mr={3}
             onClick={() => {
@@ -108,15 +115,6 @@ export default function SelectAvatar({ isOpen, onClose, userID }) {
             }}
           >
             Save
-          </Button>
-
-          <Button
-            onClick={() => {
-              closeWindow();
-            }}
-            colorScheme="yellow"
-          >
-            Cancel
           </Button>
         </ModalFooter>
       </ModalContent>

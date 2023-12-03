@@ -3,9 +3,8 @@ import {
     HStack, Text, VStack, SimpleGrid, Alert, AlertIcon, 
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useState, useEffect, memo, useMemo } from 'react'
+import { useState, useEffect, memo, useMemo, useRef } from 'react'
 import ResultItem from '@/components/resultItem'
-import { useRouter } from 'next/router';
 
 export default function Search() {
   const MemoCard = memo(Card);
@@ -18,7 +17,7 @@ export default function Search() {
   const [ totalResults, setTotalResults ] = useState(0);
   const [genreMap, setGenreMap] = useState(new Map());
   const [ dataLoaded, setDataLoaded ] = useState(false);
-  const router = useRouter();
+  const topRef = useRef(null);
   const options = useMemo(() => {
     return {
       method: 'GET',
@@ -89,7 +88,7 @@ export default function Search() {
     if (newPage >= 1 && newPage <= totalPages) {
       await fetchPageResults(newPage);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    topRef.current.scrollIntoView({ behavior: 'smooth' });
   }
       
   const fetchPageResults = async (page) => {
@@ -113,8 +112,8 @@ export default function Search() {
   }
 
   return (
-    <Box height='100vh' paddingTop='5rem'>
-      <VStack justify='center'>
+    <Box height='100vh' maxHeight='100vh' paddingTop='5rem' overflow='auto'>
+      <VStack justify='center' ref={topRef}>
           <InputGroup size='lg' width='50rem' gap={5}>
               <InputLeftElement pointerEvents='none'>
                   <SearchIcon size='lg'/>
@@ -137,8 +136,7 @@ export default function Search() {
           )
         }
       </VStack>
-      <Center padding='3rem'>
-        <VStack width='80rem'>
+        <VStack width='80rem' padding='3rem' margin='auto'>
             <SimpleGrid columns={2} gap={10}>
             {
                 searchResults.length > 0 && searchResults
@@ -163,7 +161,6 @@ export default function Search() {
               </HStack>
             )}
         </VStack>
-      </Center>
     </Box>
   )
 }
