@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   SimpleGrid,
@@ -18,36 +18,25 @@ import {
 import { useRouter } from 'next/router';
 import SearchFriend from "./searchFriends.js";
 
-export const FriendList = ({ userID, email }) => {
+export const FriendList = ({userID,email}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [friendList, setFriendList] = useState([]);
   const [friendUrlAndName, setFriendUrlAndName] = useState([]);
   const router = useRouter();
 
-  const getFriendData = useCallback(async (friendEmail, friendListID) => {
-    const q = query(collection(db, "Users"), where("email", "==", friendEmail));
-    const querySnapshot = await getDocs(q);
-    const friendData = [];
+  // Fetch the friend list when userID changes
+  useEffect(() => {
+    console.log('how many times2')
+    if (userID) {
+      setFriendList([]);
+      getFriendList(userID);
+      
 
-    querySnapshot.forEach((doc) => {
-      friendData.push({...doc.data() , friendListID});
-    });
-
-    return friendData;
-  }, []);
-
-  const getFriendDataForAll = useCallback(async (friends) => {
-    try {
-      const allFriendData = await Promise.all(
-        friends.map((friend, index) => getFriendData(friend.email, friend.friendListID))
-      );
-      setFriendUrlAndName(allFriendData.flat());
-    } catch (error) {
-      console.log("Error getting documents: ", error);
     }
-  }, [getFriendData]);
+    // eslint-disable-next-line
+  }, [userID]);
 
-  const getFriendList = useCallback(async (userID) => {
+  async function getFriendList(userID){
     try {
       const friendListRef = collection(db, "Users", userID, "Following");
       const querySnapshot = await getDocs(friendListRef);
@@ -63,15 +52,33 @@ export const FriendList = ({ userID, email }) => {
     } catch (error) {
       console.log("Error getting documents: ", error);
     }
-  }, [getFriendDataForAll, friendUrlAndName]);
+  };
 
-  useEffect(() => {
-    console.log('how many times2')
-    if (userID) {
-      setFriendList([]);
-      getFriendList(userID);
+  const getFriendData = async (friendEmail, friendListID) => {
+    const q = query(collection(db, "Users"), where("email", "==", friendEmail));
+    const querySnapshot = await getDocs(q);
+    const friendData = [];
+
+    querySnapshot.forEach((doc) => {
+      friendData.push({...doc.data() , friendListID});
+
+    });
+
+    return friendData;
+  };
+
+  const getFriendDataForAll = async (friends) => {
+    try {
+      const allFriendData = await Promise.all(
+        friends.map((friend, index) => getFriendData(friend.email, friend.friendListID))
+        
+      );
+      setFriendUrlAndName(allFriendData.flat());
+    } catch (error) {
+      console.log("Error getting documents: ", error);
     }
-  }, [userID, getFriendList]);
+  };
+
 
   // pass the objects to the new page when reroute
   function routeToFriendProfile(userEmail,friendEmail,friendName,friendID,userID){

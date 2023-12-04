@@ -133,7 +133,7 @@ return (
           borderRadius={10}
           padding={2}
           _hover={{
-            backgroundColor: "pink",
+            backgroundColor: "#92e8ba",
             fontSize: "1.5em",
   
           }}
@@ -186,7 +186,7 @@ return (
                   {list.listName}
                 </Text>
                 
-                <Button color='Black' backgroundColor={'white'} borderRadius={'5px'} _hover={{color:'red', backgroundColor:'#fffc96'}} onClick={(e)=>{deleteList(list.id)}} height={'15px'} >Remove List</Button>
+                <Button color='Black' backgroundColor={'white'} borderRadius={'5px'} _hover={{colorScheme:'red', backgroundColor:'#92e8ba'}} onClick={(e)=>{deleteList(list.id)}} height={'15px'} >Remove List</Button>
                 </Box>
                 <UnorderedList>
                 {list.movieDetail.map((movie, index) => (
@@ -205,6 +205,7 @@ return (
                             id: movie.imdbID, 
                             type: movie.Type, 
                           },
+
                         });
                       }
                     }

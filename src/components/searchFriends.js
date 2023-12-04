@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import {
   Box,
   Modal,
@@ -34,6 +34,7 @@ import {
 
 import ShowAlert from "./alert.js";
 
+
 export default function SearchFriend({ isOpen, onClose }) {
   const [friendResult, setFriendResult] = useState([]);
   const [searchInput, setSearchInput] = useState("");
@@ -41,10 +42,11 @@ export default function SearchFriend({ isOpen, onClose }) {
   const [showError, setShowError] = useState("no");
   const [showGoodAlert, setShowGoodAlert] = useState("no");
   const [errorMessage, setErrorMessage] = useState("");
-  const [userID, setUserID] = useState("");
+  const [userID,setUserID] = useState("");
   const [alreadyFollow, setAlreadyFollow] = useState(false);
   const UserRef = collection(db, "Users");
   const email = auth?.currentUser?.email;
+
 
   const searchResult = async () => {
     try {
@@ -58,8 +60,10 @@ export default function SearchFriend({ isOpen, onClose }) {
 
       const querySnapshot = await getDocs(q);
 
+      // get the data array from the querySnapshot only
       const dataArray = [];
       querySnapshot.docs.map((doc, index) => {
+        console.log("0length");
         const data = doc.data();
         const dataId = doc.id;
         dataArray.push({ ...data, id: dataId });
@@ -69,68 +73,78 @@ export default function SearchFriend({ isOpen, onClose }) {
         setFriendResult(dataArray);
         setHasResult(true);
         setShowError("no");
+        
       } else {
         setFriendResult([]);
         setErrorMessage("No user found");
         setShowGoodAlert("no");
         setShowError("yes");
+        
         setHasResult(false);
       }
+      
     } catch (error) {
       console.log("Error getting documents: ", error);
     }
+
   };
 
   function closeFunctions() {
-    onClose(), setFriendResult([]), setShowError("no"), setShowGoodAlert('no'), setAlreadyFollow(false);
+    onClose(), setFriendResult([]), setShowError("no"),setShowGoodAlert('no'), setAlreadyFollow(false);
   }
 
-  useEffect(() => {
-    const fetchID = async () => {
-      if (email) {
-        const q = query(collection(db, "Users"), where("email", "==", email));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc, index) => {
-          setUserID(doc.id);
-        });
-      }
-    };
-    fetchID();
-   }, [email]);
-   
+ // get the user's ID of the current login
+ useEffect(() => {
+  console.log('how many time search friend')
+  const fetchID = async () => {
+    console.log("email", email);
+    const q = query(collection(db, "Users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc, index) => {
+      setUserID(doc.id);
+    });
 
-  useEffect(() => {
-    const validateResult = async () => {
-      // ... (The content of the validateResult function)
-    };
-  
-    if (friendResult.length !== 0) {
-      validateResult();
-    }
-  }, [friendResult])
+  };
+  fetchID();
+}, [email]);
 
-  const followButton = async (id, friendEmail) => {
-    if (alreadyFollow) {
+useEffect(() => {
+  console.log('1')
+  if(friendResult.length != 0){
+  validateResult();
+  }
+  // eslint-disable-next-line
+}, [friendResult,]);
+
+// add friend id to the current user's following list
+  const followButton = async (id,friendEmail) => {
+    if(alreadyFollow){
       setErrorMessage("You are already following this user");
       setShowGoodAlert("no");
       setShowError("yes");
-    } else {
-      const subCollectionRef = collection(db, 'Users', userID, 'Following');
-      await addDoc(subCollectionRef, {
-        friendId: id,
-        email: friendEmail,
-      });
-      setShowGoodAlert("yes");
-      setShowError("no");
     }
-  };
+    else{
+    const subCollectionRef = collection(db, 'Users', userID, 'Following');
+    await addDoc(subCollectionRef, {
+      // Add fields to your subcollection document data here
+      friendId: id,
+      email: friendEmail,
+    });
+     setShowGoodAlert("yes");
+     setShowError("no");
+  }
 
+  }
+
+  // handle the shortcut key
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       searchResult();
     }
   };
 
+
+  // check if the user is already following the searched user
   const validateResult = async () => {
     const friendListRef = collection(db, "Users", userID, "Following");
     const querySnapshot = await getDocs(friendListRef);
@@ -139,16 +153,23 @@ export default function SearchFriend({ isOpen, onClose }) {
       friendData.push(doc.data());
     });
 
-    if (friendResult.length !== 0) {
-      const isAlreadyFollowed = friendData.some((friend) => friend.email === friendResult[0].email);
-
-      if (isAlreadyFollowed) {
-        setAlreadyFollow(true);
-      } else {
-        setAlreadyFollow(false);
-      }
+    if (friendResult.length != 0) {
+    console.log("friend data", friendData);
+    console.log("friend result", friendResult[0].email);
+  
+    // check if at least one element satifies the condition : friend.email == friendResult[0].email (loop)
+    const isAlreadyFollowed = friendData.some((friend) => friend.email === friendResult[0].email);
+  
+    if (isAlreadyFollowed) {
+      console.log("already follow");
+      setAlreadyFollow(true);
+    } else {
+      console.log("not following");
+      setAlreadyFollow(false);
     }
+  }
   };
+  
 
   return (
     <Modal isOpen={isOpen} onClose={closeFunctions}>
@@ -159,8 +180,11 @@ export default function SearchFriend({ isOpen, onClose }) {
         <ModalBody pb={6}>
           <form>
             <FormControl>
-              {showError === "yes" ? ShowAlert("error", "Failed!", errorMessage) : null}
-              {showGoodAlert === "yes" ? ShowAlert("success", "Success!", "You successfully follow") : null}
+              {showError === "yes"
+                ? ShowAlert("error", "Failed!", errorMessage)
+                : null}
+              {showGoodAlert === "yes"
+                ? ShowAlert("success", "Success!", "You successfully follow"):null}
               <Input
                 placeholder="Enter the user name or email"
                 background={"white"}
@@ -168,7 +192,7 @@ export default function SearchFriend({ isOpen, onClose }) {
                 onChange={(e) => {
                   setSearchInput(e.target.value.toLowerCase());
                 }}
-                onKeyDown={handleKeyDown}
+                onKeyDown={handleKeyDown} // Listen for Enter key press
               />
             </FormControl>
           </form>
@@ -178,15 +202,15 @@ export default function SearchFriend({ isOpen, onClose }) {
               friendResult.map((friend, index) => (
                 <Flex key={friend.Url || index} margin={"10px"} align={"center"}>
                   <Image
-                    key={friend.Url}
-                    src={friend.Url}
+                    alt="Friend avatar"
+                    key={friend.Url} // Add a unique key for each image
+                    src={friend.Url ? friend.Url : 'alien.png'} 
                     boxSize={"100%"}
                     width={100}
                     border={" 3px solid"}
                     _hover={{ border: "yellow 3px solid" }}
                     borderRadius={"full"}
                     background={"white"}
-                    alt={`Profile picture of ${friend.userName}`}
                   />
                   <Box marginLeft={"50px"}>
                     <Text fontWeight={"bold"}>User Name:</Text>
@@ -200,9 +224,9 @@ export default function SearchFriend({ isOpen, onClose }) {
                   </Box>
 
                   <Box marginLeft={"30px"}>
-                    <Button onClick={(e) => { followButton(friend.id, friend.email) }}>
-                      {alreadyFollow ? "Following" : "Follow"}
-                    </Button>
+                    <Button onClick={(e)=>{followButton(friend.id, friend.email)}}>
+                      {alreadyFollow? "Following" : "Follow"}
+                      </Button>
                   </Box>
                 </Flex>
               ))}
