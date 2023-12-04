@@ -206,6 +206,7 @@ useEffect(() => {
                     key={friend.Url} // Add a unique key for each image
                     src={friend.Url ? friend.Url : 'alien.png'} 
                     boxSize={"100%"}
+                    width={100}
                     border={" 3px solid"}
                     _hover={{ border: "yellow 3px solid" }}
                     borderRadius={"full"}
