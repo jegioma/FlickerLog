@@ -19,6 +19,15 @@
 # misc
 .DS_Store
 *.pem
+package-log.json
+next.config.js
+/.vs
+.eslintrc.json
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+jsconfig.json
 
 # debug
 npm-debug.log*
