@@ -116,10 +116,10 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 Contact any of the team for questions and more information:
-Jeancarlo Masciotti - jkaiba@protonmail.com
-Nick Wen - fwen@ggc.edu
-Bradley Nguyen - bnguyen11@ggc.edu
-Kelan McNally - kmcnally1@ggc.edu
+- Jeancarlo Masciotti - jkaiba@protonmail.com
+- Nick Wen - fwen@ggc.edu
+- Bradley Nguyen - bnguyen11@ggc.edu
+- Kelan McNally - kmcnally1@ggc.edu
 
 Project  Repo Link: [https://github.com/jegioma/FlickerLog](https://github.com/jegioma/FlickerLog)
 Project Deployed Link: [https://flicklog-980df.web.app](https://flicklog-980df.web.app)
