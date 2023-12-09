@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/jegioma/FlickerLog">
-    <img src="/public/fllogo.png" alt="Logo" width="200" height="200">
+    <img src="/public/flLogo.png" alt="Logo" width="200" height="200">
   </a>
 
 <h3 align="center">FlickerLog</h3>
