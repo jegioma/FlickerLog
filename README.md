@@ -63,17 +63,17 @@ This is a group project to demonstrate our capabilities to work and develop a fu
 
 ## Usage
 
-Enter a search query for a movie or tv show to display relevent results to your search 
+Enter a search query for a movie or tv show to display relevent results to your search <br/>
 <img src='/public/search.png' width='400px' height='200px' />
 
 <br/>
 
-Click a on a search result to get more detailed information. From here, registered users can add the result to any of their created WatchLists
+Click a on a search result to get more detailed information. From here, registered users can add the result to any of their created WatchLists <br/>
 <img src='/public/details.png' width='400px' height='200px' />
 
 <br />
 
-Create and manage your WatchLists to your preferences and share/view with others to discover and inspire yourself to find what to watch next. 
+Create and manage your WatchLists to your preferences. Share/view with others to discover and inspire yourself to find what to watch next. <br/>
 <img src='/public/profile.png' width='400px' height='200px' />
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
